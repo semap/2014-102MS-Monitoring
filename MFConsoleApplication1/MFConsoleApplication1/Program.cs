@@ -84,6 +84,11 @@ namespace MFConsoleApplication1
                 SpotBase.Debug.Print("networkType:" + r.networkType.ToString());
             }
 
+            SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
+
+            wifi.Join(scanResults[0], "NutButter3");
+
+            SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
         }
     }
 }
