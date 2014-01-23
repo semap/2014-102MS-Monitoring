@@ -1,4 +1,6 @@
-﻿using SpotBase = Microsoft.SPOT;
+﻿using GHI.Hardware.G120;
+using GHI.Premium.Net;
+using SpotBase = Microsoft.SPOT;
 using SpotIO = Microsoft.SPOT.IO;
 using SpotWare = Microsoft.SPOT.Hardware;
 
@@ -43,12 +45,46 @@ namespace MFConsoleApplication1
             SpotBase.Debug.Print("GetSerialPins:" + todo);
             SpotBase.Debug.Print("GetSpiPins:" + todo);
             SpotBase.Debug.Print("GetSupportBaudRates:" + todo);
+
+            SpotBase.Debug.Print("---------------");
+            SpotBase.Debug.Print("--WiFiExample--");
+            SpotBase.Debug.Print("---------------");
+
+            WiFiExample();
+
+            SpotBase.Debug.Print("Done");
         }
 
         // https://www.ghielectronics.com/docs/48/fez-cobra-ii-developer#425
         private static void WiFiExample()
         {
-        
+            var wifi = new WiFiRS9110(SpotWare.SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
+            if (!wifi.IsOpen)
+            {
+                wifi.Open();
+            }
+
+            if (!wifi.NetworkInterface.IsDhcpEnabled)
+            {
+                wifi.NetworkInterface.EnableDhcp();            
+            }
+
+            NetworkInterfaceExtension.AssignNetworkingStackTo(wifi);
+            WiFiNetworkInfo[] scanResults = wifi.Scan();
+
+            SpotBase.Debug.Print("Wifi Scan Results");
+            foreach (var r in scanResults)
+            {
+                SpotBase.Debug.Print("-----");
+                SpotBase.Debug.Print(r.SSID);
+                SpotBase.Debug.Print(r.ChannelNumber.ToString());
+                SpotBase.Debug.Print(r.PhysicalAddress.ToString());
+                SpotBase.Debug.Print(r.RSSI.ToString());
+                SpotBase.Debug.Print(r.SecMode.ToString());
+                SpotBase.Debug.Print(r.networkType.ToString());
+            }
+
         }
     }
 }
+
