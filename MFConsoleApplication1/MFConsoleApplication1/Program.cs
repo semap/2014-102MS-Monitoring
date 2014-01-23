@@ -1,5 +1,7 @@
 ﻿using Microsoft.SPOT;
-using GHINET = GHI.Premium.Net;
+using Microsoft.SPOT.Hardware;
+using GHI.Premium.Net;
+using GHI.Hardware.G120;
 
 namespace MFConsoleApplication1
 {

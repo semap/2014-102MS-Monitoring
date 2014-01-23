@@ -51,6 +51,7 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
+    <Reference Include="Microsoft.SPOT.Net" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
