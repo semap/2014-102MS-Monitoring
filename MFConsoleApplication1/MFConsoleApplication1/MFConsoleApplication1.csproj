@@ -46,6 +46,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GHI.Hardware.G120, Version=4.2.11.1, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
