@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.SPOT;
+﻿using Microsoft.SPOT;
+using GHINET = GHI.Premium.Net;
 
 namespace MFConsoleApplication1
 {
@@ -10,6 +10,5 @@ namespace MFConsoleApplication1
             Debug.Print(
                 Resources.GetString(Resources.StringResources.String1));
         }
-
     }
 }
