@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFConsoleApplication1", "MFConsoleApplication1\MFConsoleApplication1.csproj", "{6366C8C3-C1FD-4424-A877-9F9DFC1EA169}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "..\..\..\Microsoft .NET Micro Framework 4.3\Samples\Clock\Clock\Clock.csproj", "{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETMF Samples", "NETMF Samples", "{EFE894AB-933C-4A3C-97ED-EC8EEE0C9663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "..\NETMF 4.3 Samples\Clock\Clock\Clock.csproj", "{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,5 +28,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A} = {EFE894AB-933C-4A3C-97ED-EC8EEE0C9663}
 	EndGlobalSection
 EndGlobal
