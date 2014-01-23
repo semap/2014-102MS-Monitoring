@@ -1,8 +1,8 @@
-﻿using GHI.Hardware.G120;
-using GHI.Premium.Net;
+﻿using GhiHardwareG120 = GHI.Hardware.G120;
+using GhiPremiumNet = GHI.Premium.Net;
 using SpotBase = Microsoft.SPOT;
 using SpotIO = Microsoft.SPOT.IO;
-using SpotWare = Microsoft.SPOT.Hardware;
+using SpotHardware = Microsoft.SPOT.Hardware;
 
 namespace MFConsoleApplication1
 {
@@ -14,21 +14,21 @@ namespace MFConsoleApplication1
                 Resources.GetString(Resources.StringResources.HelloWorld));
 
             SpotBase.Debug.Print("Volumes:" + SpotIO.VolumeInfo.GetVolumes().Length);
-            SpotBase.Debug.Print("SystemInfo.Version:" + SpotWare.SystemInfo.Version);
-            SpotBase.Debug.Print("SystemInfo.OEMString:" + SpotWare.SystemInfo.OEMString);
+            SpotBase.Debug.Print("SystemInfo.Version:" + SpotHardware.SystemInfo.Version);
+            SpotBase.Debug.Print("SystemInfo.OEMString:" + SpotHardware.SystemInfo.OEMString);
 
             const string todo = "todo";
-            SpotWare.HardwareProvider hwp = SpotWare.HardwareProvider.HwProvider;
+            SpotHardware.HardwareProvider hwp = SpotHardware.HardwareProvider.HwProvider;
             SpotBase.Debug.Print("GetAnalogChannelsCount:" + hwp.GetAnalogChannelsCount());
             SpotBase.Debug.Print("GetAnalogOutputChannelsCount:" + hwp.GetAnalogOutputChannelsCount());
             SpotBase.Debug.Print("GetAnalogOutputPinForChannel:" + todo);
             SpotBase.Debug.Print("GetAnalogPinForChannel:" + todo);
             SpotBase.Debug.Print("GetAvailableAnalogOutputPrecisionInBitsForChannel:" + todo);
             SpotBase.Debug.Print("GetAvailablePrecisionInBitsForChannel:" + todo);
-            SpotBase.Debug.Print("GetButtonPins:" + hwp.GetButtonPins(SpotWare.Button.LastSystemDefinedButton));
+            SpotBase.Debug.Print("GetButtonPins:" + hwp.GetButtonPins(SpotHardware.Button.LastSystemDefinedButton));
             SpotBase.Debug.Print("GetPWMChannelsCount:" + hwp.GetPWMChannelsCount());
             SpotBase.Debug.Print("GetPinsCount:" + hwp.GetPinsCount());
-            SpotBase.Debug.Print("GetPinsUsage:" + hwp.GetPinsUsage(SpotWare.Cpu.Pin.GPIO_Pin0));
+            SpotBase.Debug.Print("GetPinsUsage:" + hwp.GetPinsUsage(SpotHardware.Cpu.Pin.GPIO_Pin0));
             SpotBase.Debug.Print("GetPwmPinForChannel:" + todo);
             SpotBase.Debug.Print("GetSerialPortsCount:" + hwp.GetSerialPortsCount());
             SpotBase.Debug.Print("GetSpiPortsCount:" + hwp.GetSpiPortsCount());
@@ -38,7 +38,7 @@ namespace MFConsoleApplication1
             SpotBase.Debug.Print("GetI2CPins:" + todo);
             SpotBase.Debug.Print("GetLCDMetrics:" + todo);
 
-            SpotWare.Cpu.PinUsage[] pinUsuage;
+            SpotHardware.Cpu.PinUsage[] pinUsuage;
             int pinCount;
             hwp.GetPinsMap(out pinUsuage, out pinCount);
             SpotBase.Debug.Print("GetPinsMap:" + pinCount);
@@ -57,8 +57,24 @@ namespace MFConsoleApplication1
 
         // https://www.ghielectronics.com/docs/48/fez-cobra-ii-developer#425
         private static void WiFiExample()
-        {
-            var wifi = new WiFiRS9110(SpotWare.SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
+        {            
+            // the wifi module is MOD2 and we connect via an SPI
+            const SpotHardware.SPI.SPI_module mod2 = SpotHardware.SPI.SPI_module.SPI2;
+
+            // why do we choose 1_10 as the chipset pin? 
+            const SpotHardware.Cpu.Pin chipSelect = GhiHardwareG120.Pin.P1_10;
+
+            // why do we choose 2_11 as the external interupt pin?
+            const SpotHardware.Cpu.Pin externalInterupt = GhiHardwareG120.Pin.P2_11;
+
+            // why do we choose 1_9 as the reset pin?
+            const SpotHardware.Cpu.Pin reset = GhiHardwareG120.Pin.P1_9;
+
+            // why do we choose 4000?
+            const uint clockRateKhz = 4000;
+
+            // create a wifi object
+            var wifi = new GhiPremiumNet.WiFiRS9110(mod2, chipSelect, externalInterupt, reset, clockRateKhz);
 
             if (!wifi.IsOpen)
             {
@@ -68,18 +84,21 @@ namespace MFConsoleApplication1
 
             if (!wifi.NetworkInterface.IsDhcpEnabled)
             {
+                // enable DHCP 
+                // we assume because we need to assign IP addresses
                 wifi.NetworkInterface.EnableDhcp();
             }
 
-            // do we have to do this, and if so, what does it do?
-            NetworkInterfaceExtension.AssignNetworkingStackTo(wifi);
+            // we have to do this because...
+            // "Currently, only one interface can access the TCP/IP stack at a time. Use this function to assign the TCP/IP stack to a certain interface."
+            GhiPremiumNet.NetworkInterfaceExtension.AssignNetworkingStackTo(wifi);
 
             // scan all Wifi channels for available networks
-            WiFiNetworkInfo[] scanResults = wifi.Scan();
+            GhiPremiumNet.WiFiNetworkInfo[] scanResults = wifi.Scan();
 
             // inspect the available WiFi networks
             SpotBase.Debug.Print("Wifi Scan Results");
-            foreach (WiFiNetworkInfo r in scanResults)
+            foreach (GhiPremiumNet.WiFiNetworkInfo r in scanResults)
             {
                 SpotBase.Debug.Print("-----");
                 SpotBase.Debug.Print("SSID:" + r.SSID);
@@ -93,9 +112,9 @@ namespace MFConsoleApplication1
             // check whether we are connected to a network
             SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
 
-            // join the specified network
+            // join a network i.e. we are joining BlueMaple
             const string preSharedKey = "NutButter3";
-            WiFiNetworkInfo targetWifiNetwork = scanResults[0];
+            GhiPremiumNet.WiFiNetworkInfo targetWifiNetwork = scanResults[0];
             wifi.Join(targetWifiNetwork, preSharedKey);
 
             // check whether we are connected to a network
@@ -104,6 +123,12 @@ namespace MFConsoleApplication1
             // todo Create a peer-to-peer connection for two way communication with FONTY (i.e. with Shaun's main Desktop Computer).
             wifi.StartAdHocHost(targetWifiNetwork.SSID, targetWifiNetwork.SecMode, preSharedKey,
                 targetWifiNetwork.ChannelNumber);
+            
+            // todo Figure out how to send data across the Ethernet network via TCP or UDP
+            // Options
+            // HttpWebRequest
+            // Windows Communication Foundation
+            // How can we leverage the peer-to-peer communication in StartAdHocHost?
         }
     }
 }
