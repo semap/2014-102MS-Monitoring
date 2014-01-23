@@ -13,7 +13,7 @@ namespace MFConsoleApplication1
             SpotBase.Debug.Print(
                 Resources.GetString(Resources.StringResources.HelloWorld));
 
-            SpotBase.Debug.Print("Volumes:" + SpotIO.VolumeInfo.GetVolumes().Length.ToString());
+            SpotBase.Debug.Print("Volumes:" + SpotIO.VolumeInfo.GetVolumes().Length);
             SpotBase.Debug.Print("SystemInfo.Version:" + SpotWare.SystemInfo.Version);
             SpotBase.Debug.Print("SystemInfo.OEMString:" + SpotWare.SystemInfo.OEMString);
 
@@ -59,37 +59,51 @@ namespace MFConsoleApplication1
         private static void WiFiExample()
         {
             var wifi = new WiFiRS9110(SpotWare.SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
+
             if (!wifi.IsOpen)
             {
+                // open the driver
                 wifi.Open();
             }
 
             if (!wifi.NetworkInterface.IsDhcpEnabled)
             {
-                wifi.NetworkInterface.EnableDhcp();            
+                wifi.NetworkInterface.EnableDhcp();
             }
 
+            // do we have to do this, and if so, what does it do?
             NetworkInterfaceExtension.AssignNetworkingStackTo(wifi);
+
+            // scan all Wifi channels for available networks
             WiFiNetworkInfo[] scanResults = wifi.Scan();
 
+            // inspect the available WiFi networks
             SpotBase.Debug.Print("Wifi Scan Results");
-            foreach (var r in scanResults)
+            foreach (WiFiNetworkInfo r in scanResults)
             {
                 SpotBase.Debug.Print("-----");
                 SpotBase.Debug.Print("SSID:" + r.SSID);
-                SpotBase.Debug.Print("ChannelNumber:" + r.ChannelNumber.ToString());
-                SpotBase.Debug.Print("PhysicalAddress:" + r.PhysicalAddress.ToString());
-                SpotBase.Debug.Print("RSSI:" + r.RSSI.ToString());
-                SpotBase.Debug.Print("SecMode:" + r.SecMode.ToString());
-                SpotBase.Debug.Print("networkType:" + r.networkType.ToString());
+                SpotBase.Debug.Print("ChannelNumber:" + r.ChannelNumber);
+                SpotBase.Debug.Print("PhysicalAddress:" + r.PhysicalAddress);
+                SpotBase.Debug.Print("RSSI:" + r.RSSI);
+                SpotBase.Debug.Print("SecMode:" + r.SecMode);
+                SpotBase.Debug.Print("networkType:" + r.networkType);
             }
 
+            // check whether we are connected to a network
             SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
 
-            wifi.Join(scanResults[0], "NutButter3");
+            // join the specified network
+            const string preSharedKey = "NutButter3";
+            WiFiNetworkInfo targetWifiNetwork = scanResults[0];
+            wifi.Join(targetWifiNetwork, preSharedKey);
 
+            // check whether we are connected to a network
             SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
+
+            // todo Create a peer-to-peer connection for two way communication with FONTY (i.e. with Shaun's main Desktop Computer).
+            wifi.StartAdHocHost(targetWifiNetwork.SSID, targetWifiNetwork.SecMode, preSharedKey,
+                targetWifiNetwork.ChannelNumber);
         }
     }
 }
-
