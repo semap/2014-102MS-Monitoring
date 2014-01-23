@@ -55,9 +55,8 @@ namespace MFConsoleApplication1
             SpotBase.Debug.Print("Done");
         }
 
-        // https://www.ghielectronics.com/docs/48/fez-cobra-ii-developer#425
-        private static void WiFiExample()
-        {            
+        private static GhiPremiumNet.WiFiRS9110 CreateWifiProxy()
+        {
             // the wifi module is MOD2 and we connect via an SPI
             const SpotHardware.SPI.SPI_module mod2 = SpotHardware.SPI.SPI_module.SPI2;
 
@@ -75,6 +74,14 @@ namespace MFConsoleApplication1
 
             // create a wifi object
             var wifi = new GhiPremiumNet.WiFiRS9110(mod2, chipSelect, externalInterupt, reset, clockRateKhz);
+
+            return wifi;
+        }
+
+        // https://www.ghielectronics.com/docs/48/fez-cobra-ii-developer#425
+        private static void WiFiExample()
+        {
+            var wifi = CreateWifiProxy();
 
             if (!wifi.IsOpen)
             {
@@ -121,8 +128,9 @@ namespace MFConsoleApplication1
             SpotBase.Debug.Print("IsLinkConnected:" + wifi.IsLinkConnected);
 
             // todo Create a peer-to-peer connection for two way communication with FONTY (i.e. with Shaun's main Desktop Computer).
-            wifi.StartAdHocHost(targetWifiNetwork.SSID, targetWifiNetwork.SecMode, preSharedKey,
-                targetWifiNetwork.ChannelNumber);
+            wifi.StartAdHocHost("Hello World", GhiPremiumNet.SecurityMode.Open, "", 0);
+
+            SpotBase.Debug.Print("-----StartAdHocHost-----");
             
             // todo Figure out how to send data across the Ethernet network via TCP or UDP
             // Options
