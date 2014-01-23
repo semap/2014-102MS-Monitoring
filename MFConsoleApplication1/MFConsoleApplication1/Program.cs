@@ -76,12 +76,12 @@ namespace MFConsoleApplication1
             foreach (var r in scanResults)
             {
                 SpotBase.Debug.Print("-----");
-                SpotBase.Debug.Print(r.SSID);
-                SpotBase.Debug.Print(r.ChannelNumber.ToString());
-                SpotBase.Debug.Print(r.PhysicalAddress.ToString());
-                SpotBase.Debug.Print(r.RSSI.ToString());
-                SpotBase.Debug.Print(r.SecMode.ToString());
-                SpotBase.Debug.Print(r.networkType.ToString());
+                SpotBase.Debug.Print("SSID:" + r.SSID);
+                SpotBase.Debug.Print("ChannelNumber:" + r.ChannelNumber.ToString());
+                SpotBase.Debug.Print("PhysicalAddress:" + r.PhysicalAddress.ToString());
+                SpotBase.Debug.Print("RSSI:" + r.RSSI.ToString());
+                SpotBase.Debug.Print("SecMode:" + r.SecMode.ToString());
+                SpotBase.Debug.Print("networkType:" + r.networkType.ToString());
             }
 
         }
