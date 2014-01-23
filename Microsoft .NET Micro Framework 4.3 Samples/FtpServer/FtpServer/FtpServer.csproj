@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>FtpServer</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FtpServerSample</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7BBB1F3F-0270-4CF3-80D8-8A6342B97A2C}</ProjectGuid>
+    <TinyCLR_CSharp_Documentation>true</TinyCLR_CSharp_Documentation>
+    <TemplateID>Microsoft.CSharp.MicroFramework.Sample.FtpServer</TemplateID>
+    <TemplateProjectType>CSharp</TemplateProjectType>
+    <TemplateNameString>FtpServer</TemplateNameString>
+    <TemplateDescriptionString>FtpServer Sample</TemplateDescriptionString>
+    <TemplateSortOrder>1000</TemplateSortOrder>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>FtpServerSample.MyFtpServer</StartupObject>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="FtpServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Hardware">
+    </Reference>
+    <Reference Include="System.Http">
+    </Reference>
+    <Reference Include="System.IO">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.IO">
+    </Reference>
+    <Reference Include="System.Ftp">
+    </Reference>
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Net">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Net.Security">
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+</Project>

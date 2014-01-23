@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>HelloWorldClient</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>HelloWorldSample</RootNamespace>
+    <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0500B7EF-DE28-482D-9355-84EAA418A1D1}</ProjectGuid>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Microsoft.SPOT.Sample.MFSimpleServiceClient</StartupObject>
+  </PropertyGroup>
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="HelloWorldClientApp.cs" />
+    <Compile Include="ServiceHelloWCF.cs" />
+    <Compile Include="ServiceHelloWCFClientProxy.cs" />
+    <Compile Include="ServiceHelloWCFHostedService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MFDpwsClient">
+    </Reference>
+    <Reference Include="MFDpwsDevice">
+    </Reference>
+    <Reference Include="MFDpwsExtensions">
+    </Reference>
+    <Reference Include="MFWsStack">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.IO">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Net">
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="System.IO">
+    </Reference>
+    <Reference Include="System.Http">
+    </Reference>
+    <Reference Include="System.Xml">
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ServiceHelloWCF.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>
