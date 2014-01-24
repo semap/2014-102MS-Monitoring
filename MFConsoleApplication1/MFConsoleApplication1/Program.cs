@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using GHI.Hardware.G120;
 using GHI.Premium.Net;
 using Microsoft.SPOT;
-using Microsoft.SPOT.IO;
 using Microsoft.SPOT.Hardware;
+using Microsoft.SPOT.IO;
 
 namespace MFConsoleApplication1
 {
@@ -14,15 +17,22 @@ namespace MFConsoleApplication1
         {
             Debug.Print(Resources.GetString(Resources.StringResources.HelloWorld));
 
-            PrintDeviceInfo();
+            bool printDeviceInfo = false;
+            if (printDeviceInfo)
+            {
+                PrintDeviceInfo();
+            }
 
-            var wifi = CreateAndOpenNewWiFiRs9110Proxy();
+            WiFiRS9110 wifi = CreateAndOpenNewWiFiRs9110Proxy();
 
-            ConnectWifiToAccessPoint(wifi, "BlueMaple", "NutButter3");
-
-            RetrievePageFromWebServer(wifi, "http://www.bigfont.ca");
-
-            DisconnectWifiFromAccessPoint(wifi);
+            bool connectToAccessPoint = false;
+            if (connectToAccessPoint)
+            {
+                ConnectWifiToAccessPoint(wifi, "BlueMaple", "NutButter3");
+                MakeAnHttpWebRequestOverInternet(wifi, "http://www.bigfont.ca");
+                UseSocketsToGetWebPage();
+                DisconnectWifiFromAccessPoint(wifi);
+            }
 
             SetupAdHocHost(wifi, "MyAdhocHost");
 
@@ -97,7 +107,7 @@ namespace MFConsoleApplication1
                 wifi.Open();
             }
 
-            wifi.WirelessConnectivityChanged += new WiFiRS9110.WirelessConnectivityChangedEventHandler(WiFi_Changed);
+            wifi.WirelessConnectivityChanged += WiFi_Changed;
 
             // we ALWAYS have to class AssignNetworkingStackTo() because, 
             // "Currently, only one interface can access the TCP/IP stack at a time. Use this function to assign the TCP/IP stack to a certain [wifi] interface."
@@ -114,7 +124,70 @@ namespace MFConsoleApplication1
             }
         }
 
-        private static void RetrievePageFromWebServer(WiFiRS9110 wifi, string url)
+        private static void UseSocketsToGetWebPage()
+        {
+            const string url = "http://www.bigfont.ca";
+            const string host = "bigfont.ca";
+            IPHostEntry hostEntry = Dns.GetHostEntry(host);
+
+            // we are assuming port 80
+            var hostEndpoint = new IPEndPoint(hostEntry.AddressList[0], 80);
+
+            // other interesting AddressFamilies include InterNetworkV6, Ieee12844
+            // other interesting ProtocolTypes include Udp, dGram
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            socket.Connect(hostEndpoint);
+
+            using (socket)
+            {
+                const Int32 cMicrosecondsPerSecond = 1000000;
+
+                // Send request to the server.
+                const string request = "GET " + url + " HTTP/1.1\r\nHost: " + host +
+                                       "\r\nConnection: Close\r\n\r\n";
+                byte[] bytesToSend = Encoding.UTF8.GetBytes(request);
+                socket.Send(bytesToSend, bytesToSend.Length, 0);
+
+                // Reusable buffer for receiving chunks of the document.
+                var buffer = new Byte[1024];
+
+                // Accumulates the received page as it is built from the buffer.
+                string page = String.Empty;
+
+                // Wait up to 30 seconds for initial data to be available.  Throws 
+                // an exception if the connection is closed with no data sent.
+                DateTime timeoutAt = DateTime.Now.AddSeconds(30);
+                while (socket.Available == 0 && DateTime.Now < timeoutAt)
+                {
+                    Thread.Sleep(100);
+                }
+
+                // Poll for data until 30-second timeout.  Returns true for data and 
+                // connection closed.
+                while (socket.Poll(30 * cMicrosecondsPerSecond,
+                    SelectMode.SelectRead))
+                {
+                    // If there are 0 bytes in the buffer, then the connection is 
+                    // closed, or we have timed out.
+                    if (socket.Available == 0)
+                        break;
+
+                    // Zero all bytes in the re-usable buffer.
+                    Array.Clear(buffer, 0, buffer.Length);
+
+                    // Read a buffer-sized HTML chunk.
+                    Int32 bytesRead = socket.Receive(buffer);
+
+                    // Append the chunk to the string.
+                    page = page + new String(Encoding.UTF8.GetChars(buffer));
+
+                    Debug.Print(page);
+                }
+            }
+        }
+
+        private static void MakeAnHttpWebRequestOverInternet(WiFiRS9110 wifi, string url)
         {
             var request = WebRequest.Create(new Uri(url)) as HttpWebRequest;
             if (request == null)
@@ -132,7 +205,7 @@ namespace MFConsoleApplication1
             }
             catch (Exception e)
             {
-                Debug.Print("Exception in HttpWebRequest.GetResponse(): " + e.ToString());
+                Debug.Print("Exception in HttpWebRequest.GetResponse(): " + e);
             }
 
             if (resp != null && resp.ContentLength > 0)
@@ -183,16 +256,62 @@ namespace MFConsoleApplication1
             }
         }
 
+        private const string ipAddress = "169.255.0.200";
+        private const string subnetMask = "255.255.0.0";
+        private const string gatewayAddress = "169.255.0.1";
+
         private static void SetupAdHocHost(WiFiRS9110 wifi, string hostName)
         {
-            wifi.StartAdHocHost(hostName, SecurityMode.Open, " ", 10);
-            wifi.NetworkInterface.EnableStaticIP("169.254.0.200", "255.255.0.0", "169.254.0.1");
+            // works well with laptop using MS-Windows as long you use an IP address 169.255.x.x
+            // See more at: https://www.ghielectronics.com/community/forum/topic?id=10374&page=3#sthash.j13kLPi4.dpuf
+            wifi.NetworkInterface.EnableStaticIP(ipAddress, subnetMask, gatewayAddress);
+            wifi.StartAdHocHost(hostName, SecurityMode.Open, "", 10);            
+        }        
+
+        private static void RunHttpListener()
+        {
+            Debug.Print("Run server.");
+            var listener = new HttpListener("http", -1);
+            listener.Start();
+            HttpListenerContext context = listener.GetContext();
+            if (context != null)
+            {
+                HttpListenerResponse response = context.Response;          
+            }
+            Debug.Print("Done");
+        }
+
+        private static void RunTcpSocketServer()
+        {
+            Debug.Print("RunTcpSocketServer");
+
+            var server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            var localEndpoint = new IPEndPoint(IPAddress.Parse(ipAddress), 80);
+            server.Bind(localEndpoint);
+            server.Listen(1);
+            while (true)
+            {
+                Debug.Print("Foo");
+                // Wait for a client to connect.
+                try
+                {
+                    Socket clientSocket = server.Accept();
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.Message);
+                }
+                
+                Debug.Print("Bar");
+            }
         }
 
         private static void WiFi_Changed(object sender, WiFiRS9110.WirelessConnectivityEventArgs e)
-        {
+        {          
             Debug.Print("isConnected = " + e.IsConnected);
-            Debug.Print("Info = " + e.NetworkInformation); // this is null        
+            Debug.Print("Info = " + e.NetworkInformation); // this is null  
+      
+            RunTcpSocketServer();
         }
     }
 }
