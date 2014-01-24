@@ -1,0 +1,1 @@
+"%ProgramFiles(x86)%\Microsoft .NET Micro Framework\v4.1\Tools\MFSvcUtil.exe" http://localhost/GadgeteerWCFHost?wsdl /d:.\ /o:Service1

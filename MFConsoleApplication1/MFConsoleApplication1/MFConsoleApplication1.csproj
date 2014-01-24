@@ -53,6 +53,8 @@
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
+    <Reference Include="System" />
+    <Reference Include="System.Http" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

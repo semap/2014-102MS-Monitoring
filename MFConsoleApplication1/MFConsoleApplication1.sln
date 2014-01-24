@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFConsoleApplication1", "MF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETMF Samples", "NETMF Samples", "{EFE894AB-933C-4A3C-97ED-EC8EEE0C9663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clock", "..\NETMF 4.3 Samples\Clock\Clock\Clock.csproj", "{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "..\NETMF 4.3 Samples\HttpClient\HttpClient\HttpClient.csproj", "{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,17 +19,17 @@ Global
 		{6366C8C3-C1FD-4424-A877-9F9DFC1EA169}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6366C8C3-C1FD-4424-A877-9F9DFC1EA169}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6366C8C3-C1FD-4424-A877-9F9DFC1EA169}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{98E3426E-9944-4C34-A1B3-BAEEEB651D4A} = {EFE894AB-933C-4A3C-97ED-EC8EEE0C9663}
+		{9387BD77-6E80-40F6-9DB0-11FAEFBD4074} = {EFE894AB-933C-4A3C-97ED-EC8EEE0C9663}
 	EndGlobalSection
 EndGlobal

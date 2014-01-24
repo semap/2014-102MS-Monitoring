@@ -70,8 +70,8 @@ namespace HttpClientSample
         public static void PrintHttpData(string url, X509Certificate[] caCerts)
         {
             // Create an HTTP Web request.
-            HttpWebRequest request = 
-                HttpWebRequest.Create(url) as HttpWebRequest;
+            var request = 
+                WebRequest.Create(url) as HttpWebRequest;
 
             // Assign the certificates. The value must not be null if the
             // connection is HTTPS.
