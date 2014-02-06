@@ -14,7 +14,7 @@ namespace MFConsoleApplication3
         private static WiFiRS9110 _wifi;
         private static readonly ManualResetEvent mre = new ManualResetEvent(false);
 
-        private const string AdHocHostName = "MyAdHocHost";
+        private const string AdHocHostName = "HarrisonHost";
         private const string IpAddress = "169.254.0.200";
         private const string SubnetMask = "255.255.0.0";
         private const string GatewayAddress = "169.254.0.1";
