@@ -26,12 +26,12 @@ namespace tempuri.org
 {
     
     
-    public class IDuperSvcClientProxy : DpwsClient
+    public class IWonderfulSvcClientProxy : DpwsClient
     {
         
         private IRequestChannel m_requestChannel = null;
         
-        public IDuperSvcClientProxy(Binding binding, ProtocolVersion version) : 
+        public IWonderfulSvcClientProxy(Binding binding, ProtocolVersion version) : 
                 base(binding, version)
         {
 
@@ -44,7 +44,7 @@ namespace tempuri.org
 
             // Create request header
             String action;
-            action = "http://tempuri.org/IDuperSvc/IsActive";
+            action = "http://tempuri.org/IWonderfulSvc/IsActive";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, req, WsPrefix.None);
@@ -76,7 +76,7 @@ namespace tempuri.org
 
             // Create request header
             String action;
-            action = "http://tempuri.org/IDuperSvc/GetData";
+            action = "http://tempuri.org/IWonderfulSvc/GetData";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, req, WsPrefix.None);
@@ -108,7 +108,7 @@ namespace tempuri.org
 
             // Create request header
             String action;
-            action = "http://tempuri.org/IDuperSvc/GetDataUsingDataContract";
+            action = "http://tempuri.org/IWonderfulSvc/GetDataUsingDataContract";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, req, WsPrefix.None);

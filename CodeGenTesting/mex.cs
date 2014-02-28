@@ -236,7 +236,7 @@ namespace tempuri.org
     {
         
         [DataMember(Order=0, IsNillable=true, IsRequired=false)]
-        public schemas.datacontract.org.YahooWcf.CompositeType composite;
+        public schemas.datacontract.org.FantasticoWcfServices.CompositeType composite;
     }
     
     public class GetDataUsingDataContractDataContractSerializer : DataContractSerializer
@@ -259,9 +259,9 @@ namespace tempuri.org
             {
                 GetDataUsingDataContractField = new GetDataUsingDataContract();
                 reader.Read();
-                schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer compositeDCS = new schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer("composite", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/YahooWcf");
+                schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer compositeDCS = new schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer("composite", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/FantasticoWcfServices");
                 compositeDCS.BodyParts = this.BodyParts;
-                GetDataUsingDataContractField.composite = ((schemas.datacontract.org.YahooWcf.CompositeType)(compositeDCS.ReadObject(reader)));
+                GetDataUsingDataContractField.composite = ((schemas.datacontract.org.FantasticoWcfServices.CompositeType)(compositeDCS.ReadObject(reader)));
                 reader.ReadEndElement();
             }
             return GetDataUsingDataContractField;
@@ -272,7 +272,7 @@ namespace tempuri.org
             GetDataUsingDataContract GetDataUsingDataContractField = ((GetDataUsingDataContract)(graph));
             if (WriteParentElement(writer, true, true, graph))
             {
-                schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer compositeDCS = new schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer("composite", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/YahooWcf");
+                schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer compositeDCS = new schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer("composite", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/FantasticoWcfServices");
                 compositeDCS.BodyParts = this.BodyParts;
                 compositeDCS.WriteObject(writer, GetDataUsingDataContractField.composite);
                 writer.WriteEndElement();
@@ -286,7 +286,7 @@ namespace tempuri.org
     {
         
         [DataMember(Order=0, IsNillable=true, IsRequired=false)]
-        public schemas.datacontract.org.YahooWcf.CompositeType GetDataUsingDataContractResult;
+        public schemas.datacontract.org.FantasticoWcfServices.CompositeType GetDataUsingDataContractResult;
     }
     
     public class GetDataUsingDataContractResponseDataContractSerializer : DataContractSerializer
@@ -309,9 +309,9 @@ namespace tempuri.org
             {
                 GetDataUsingDataContractResponseField = new GetDataUsingDataContractResponse();
                 reader.Read();
-                schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer GetDataUsingDataContractResultDCS = new schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer("GetDataUsingDataContractResult", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/YahooWcf");
+                schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer GetDataUsingDataContractResultDCS = new schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer("GetDataUsingDataContractResult", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/FantasticoWcfServices");
                 GetDataUsingDataContractResultDCS.BodyParts = this.BodyParts;
-                GetDataUsingDataContractResponseField.GetDataUsingDataContractResult = ((schemas.datacontract.org.YahooWcf.CompositeType)(GetDataUsingDataContractResultDCS.ReadObject(reader)));
+                GetDataUsingDataContractResponseField.GetDataUsingDataContractResult = ((schemas.datacontract.org.FantasticoWcfServices.CompositeType)(GetDataUsingDataContractResultDCS.ReadObject(reader)));
                 reader.ReadEndElement();
             }
             return GetDataUsingDataContractResponseField;
@@ -322,7 +322,7 @@ namespace tempuri.org
             GetDataUsingDataContractResponse GetDataUsingDataContractResponseField = ((GetDataUsingDataContractResponse)(graph));
             if (WriteParentElement(writer, true, true, graph))
             {
-                schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer GetDataUsingDataContractResultDCS = new schemas.datacontract.org.YahooWcf.CompositeTypeDataContractSerializer("GetDataUsingDataContractResult", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/YahooWcf");
+                schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer GetDataUsingDataContractResultDCS = new schemas.datacontract.org.FantasticoWcfServices.CompositeTypeDataContractSerializer("GetDataUsingDataContractResult", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/FantasticoWcfServices");
                 GetDataUsingDataContractResultDCS.BodyParts = this.BodyParts;
                 GetDataUsingDataContractResultDCS.WriteObject(writer, GetDataUsingDataContractResponseField.GetDataUsingDataContractResult);
                 writer.WriteEndElement();
@@ -332,25 +332,25 @@ namespace tempuri.org
     }
     
     [ServiceContract(Namespace="http://tempuri.org/")]
-    [PolicyAssertion(Namespace="http://www.w3.org/2006/05/addressing/wsdl", Name="UsingAddressing", PolicyID="Ws2007Http_policy")]
-    public interface IIDuperSvc
+    [PolicyAssertion(Namespace="http://www.w3.org/2006/05/addressing/wsdl", Name="UsingAddressing", PolicyID="WS2007HttpBinding_IWonderfulSvc_policy")]
+    public interface IIWonderfulSvc
     {
         
-        [OperationContract(Action="http://tempuri.org/IDuperSvc/IsActive")]
+        [OperationContract(Action="http://tempuri.org/IWonderfulSvc/IsActive")]
         IsActiveResponse IsActive(IsActive req);
         
-        [OperationContract(Action="http://tempuri.org/IDuperSvc/GetData")]
+        [OperationContract(Action="http://tempuri.org/IWonderfulSvc/GetData")]
         GetDataResponse GetData(GetData req);
         
-        [OperationContract(Action="http://tempuri.org/IDuperSvc/GetDataUsingDataContract")]
+        [OperationContract(Action="http://tempuri.org/IWonderfulSvc/GetDataUsingDataContract")]
         GetDataUsingDataContractResponse GetDataUsingDataContract(GetDataUsingDataContract req);
     }
 }
-namespace schemas.datacontract.org.YahooWcf
+namespace schemas.datacontract.org.FantasticoWcfServices
 {
     
     
-    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/YahooWcf")]
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/FantasticoWcfServices")]
     public class CompositeType
     {
         

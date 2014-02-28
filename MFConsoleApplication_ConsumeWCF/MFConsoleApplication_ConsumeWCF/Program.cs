@@ -61,21 +61,20 @@ namespace MFConsoleApplication_ConsumeWCF
         }
 
         static void ConnectToWcfServiceViaHttp()
-        {            
-            WS2007HttpBinding binding =
-                new WS2007HttpBinding(new HttpTransportBindingConfig(new System.Uri("http://192.168.1.102:80/YahooWcf/DuperSvc/")));
-
-            IDuperSvcClientProxy proxy = new IDuperSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
+        {
+            Uri serviceUri = new System.Uri("http://192.168.1.102/FantasticoWcfServices/WonderfulSvc");
+            HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
+            WS2007HttpBinding binding = new WS2007HttpBinding(config);
+            IWonderfulSvcClientProxy proxy = new IWonderfulSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
             try
             {
-                //GetDataResponse resp = proxy.GetData(new GetData() { value = 123 });
                 IsActiveResponse resp = proxy.IsActive(new IsActive());
             }
             catch (Exception e)
             {
                 string m = e.Message;
-                m += "";
             }
+            
         }
 
         static void ConnectToWcfServiceViaTcp()
