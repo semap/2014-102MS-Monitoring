@@ -35,9 +35,11 @@ namespace MFConsoleApplication_ConsumeWCF
 
             Debug.Print("IP address:" + eth.NetworkInterface.IPAddress);
 
+            int i = 0;
             while (eth.NetworkInterface.IPAddress.Equals("0.0.0.0"))
             {
-                Debug.Print(eth.NetworkInterface.IPAddress);
+                ++i;
+                Debug.Print(eth.NetworkInterface.IPAddress + i.ToString());
             }
 
             // we can reach a page on the internet
@@ -46,14 +48,16 @@ namespace MFConsoleApplication_ConsumeWCF
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
                 string result = reader.ReadLine();
+                Debug.Print(result);
             }
 
             // we can reach the default iis page on the lan
-            request = HttpWebRequest.Create("http://192.168.1.102");
+            request = HttpWebRequest.Create("http://192.168.1.102:80");
             response = request.GetResponse();
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
-                string result = reader.ReadToEnd();
+                string result = reader.ReadLine();
+                Debug.Print(result);
             }
 
             // we cannot, though, connect to the WCF Http Service.
@@ -62,10 +66,10 @@ namespace MFConsoleApplication_ConsumeWCF
 
         static void ConnectToWcfServiceViaHttp()
         {
-            Uri serviceUri = new System.Uri("http://192.168.1.102/FantasticoWcfServices/WonderfulSvc");
+            Uri serviceUri = new System.Uri("http://192.168.1.102:80/AlgaeWcfServices/PersistenceSvc/");
             HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
             WS2007HttpBinding binding = new WS2007HttpBinding(config);
-            IWonderfulSvcClientProxy proxy = new IWonderfulSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
+            IPersistenceSvcClientProxy proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
             try
             {
                 IsActiveResponse resp = proxy.IsActive(new IsActive());

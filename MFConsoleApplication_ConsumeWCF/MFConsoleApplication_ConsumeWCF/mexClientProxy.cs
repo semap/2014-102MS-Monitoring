@@ -26,12 +26,12 @@ namespace tempuri.org
 {
     
     
-    public class IWonderfulSvcClientProxy : DpwsClient
+    public class IPersistenceSvcClientProxy : DpwsClient
     {
         
         private IRequestChannel m_requestChannel = null;
         
-        public IWonderfulSvcClientProxy(Binding binding, ProtocolVersion version) : 
+        public IPersistenceSvcClientProxy(Binding binding, ProtocolVersion version) : 
                 base(binding, version)
         {
 
@@ -44,7 +44,7 @@ namespace tempuri.org
 
             // Create request header
             String action;
-            action = "http://tempuri.org/IWonderfulSvc/IsActive";
+            action = "http://tempuri.org/IPersistenceSvc/IsActive";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, req, WsPrefix.None);
@@ -66,70 +66,6 @@ namespace tempuri.org
             respDcs = new IsActiveResponseDataContractSerializer("IsActiveResponse", "http://tempuri.org/");
             IsActiveResponse resp;
             resp = ((IsActiveResponse)(respDcs.ReadObject(response.Reader)));
-            response.Reader.Dispose();
-            response.Reader = null;
-            return resp;
-        }
-        
-        public virtual GetDataResponse GetData(GetData req)
-        {
-
-            // Create request header
-            String action;
-            action = "http://tempuri.org/IWonderfulSvc/GetData";
-            WsWsaHeader header;
-            header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
-            WsMessage request = new WsMessage(header, req, WsPrefix.None);
-
-            // Create request serializer
-            GetDataDataContractSerializer reqDcs;
-            reqDcs = new GetDataDataContractSerializer("GetData", "http://tempuri.org/");
-            request.Serializer = reqDcs;
-            request.Method = "GetData";
-
-
-            // Send service request
-            m_requestChannel.Open();
-            WsMessage response = m_requestChannel.Request(request);
-            m_requestChannel.Close();
-
-            // Process response
-            GetDataResponseDataContractSerializer respDcs;
-            respDcs = new GetDataResponseDataContractSerializer("GetDataResponse", "http://tempuri.org/");
-            GetDataResponse resp;
-            resp = ((GetDataResponse)(respDcs.ReadObject(response.Reader)));
-            response.Reader.Dispose();
-            response.Reader = null;
-            return resp;
-        }
-        
-        public virtual GetDataUsingDataContractResponse GetDataUsingDataContract(GetDataUsingDataContract req)
-        {
-
-            // Create request header
-            String action;
-            action = "http://tempuri.org/IWonderfulSvc/GetDataUsingDataContract";
-            WsWsaHeader header;
-            header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
-            WsMessage request = new WsMessage(header, req, WsPrefix.None);
-
-            // Create request serializer
-            GetDataUsingDataContractDataContractSerializer reqDcs;
-            reqDcs = new GetDataUsingDataContractDataContractSerializer("GetDataUsingDataContract", "http://tempuri.org/");
-            request.Serializer = reqDcs;
-            request.Method = "GetDataUsingDataContract";
-
-
-            // Send service request
-            m_requestChannel.Open();
-            WsMessage response = m_requestChannel.Request(request);
-            m_requestChannel.Close();
-
-            // Process response
-            GetDataUsingDataContractResponseDataContractSerializer respDcs;
-            respDcs = new GetDataUsingDataContractResponseDataContractSerializer("GetDataUsingDataContractResponse", "http://tempuri.org/");
-            GetDataUsingDataContractResponse resp;
-            resp = ((GetDataUsingDataContractResponse)(respDcs.ReadObject(response.Reader)));
             response.Reader.Dispose();
             response.Reader = null;
             return resp;
