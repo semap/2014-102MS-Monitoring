@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MFConsoleApplication_ConsumeWCF
+namespace Algae.WcfCobraTestClient
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace MFConsoleApplication_ConsumeWCF
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("MFConsoleApplication_ConsumeWCF.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Algae.WcfCobraTestClient.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

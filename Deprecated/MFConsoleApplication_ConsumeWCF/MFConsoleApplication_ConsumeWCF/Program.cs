@@ -8,7 +8,7 @@ using System;
 using System.Net;
 using System.IO;
 
-namespace MFConsoleApplication_ConsumeWCF
+namespace Algae.WcfCobraTestClient
 {
     public class Program
     {
