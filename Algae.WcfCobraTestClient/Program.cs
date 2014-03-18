@@ -25,38 +25,82 @@ namespace Algae.WcfCobraTestClient
         private static string testLanUri = "http://192.168.1.102:80";
         private static string wcfServiceEndpointUri = "http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/";
 
+        // flash led
+        private static OutputPort led1 = new OutputPort(GHI.Hardware.G120.Pin.P1_15, true);
+        private static bool doFlashing = false;
+
+        // buttons
+        private static InterruptPort lrd1 =
+            new InterruptPort(GHI.Hardware.G120.Pin.P0_22, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
+
+        private static InterruptPort lrd0 =
+            new InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);        
+
         public static void Main()
+        {                        
+            lrd0.OnInterrupt += DoFlashing;
+            lrd1.OnInterrupt += DoNotDoFlashing;
+
+            InitializeFezCobraIIEthernetPort();
+
+            LoopUntilWeHaveAnIpAddress();
+
+            TryToReachAnInternetPage();
+
+            TryToReachALanPage();
+
+            TryToConnectToTheWcfService();
+
+            PreventTheThreadFromExiting();
+        }
+
+        private static void TimerCallback_FlashLed1(object stateInfo)
         {
-            // Initialize FEZ Cobra II built-in Ethernet port
-            eth = new EthernetENC28J60(SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
-
-            eth.NetworkAddressChanged += Eth_NetworkAddressChanged;
-            eth.CableConnectivityChanged += Eth_CableConnectivityChanged;
-
-            if (!eth.IsOpen)
+            if (doFlashing)
             {
-                eth.Open();
+                bool isOn = led1.Read();
+                led1.Write(!isOn);
             }
-                
-            NetworkInterfaceExtension.AssignNetworkingStackTo(eth);
-
-            if (!eth.NetworkInterface.IsDhcpEnabled)
+            else
             {
-                eth.NetworkInterface.EnableDhcp();
-            }                
-
-            // Required to kick DHCP into action
-            eth.NetworkInterface.RenewDhcpLease();  
-
-            // Loop until we're connected.
-            int i = 0;
-            while (eth.NetworkInterface.IPAddress.Equals(zeroIpAddress))
-            {
-                ++i;
-                Debug.Print("Awaiting a non-zero IP address. Loop #" + i.ToString());
-                Thread.Sleep(moderateSleep);
+                led1.Write(false);
             }
+        }
 
+        private static void PreventTheThreadFromExiting()
+        {
+            doFlashing = true;
+            Timer timer = new Timer(TimerCallback_FlashLed1, new object(), 0, 1000);            
+        }
+
+        private static void TryToConnectToTheWcfService()
+        {
+            // Can we connect to the WCF Http Service?
+            var isConnectedToWcfService = ConnectToWcfServiceViaHttp();
+            if (isConnectedToWcfService)
+            {
+                Debug.Print("Connected to WCF Service!");                
+            }
+        }
+
+        private static void TryToReachALanPage()
+        {
+            // Can we reach the default iis page on the LAN?
+            WebRequest request = HttpWebRequest.Create(testLanUri);
+            WebResponse response = request.GetResponse();
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                string result = reader.ReadLine();
+                if (result.Length > 0)
+                {
+                    Debug.Print("Connected to the default iis page on the lan");
+                    Debug.Print(result);
+                }
+            }
+        }
+
+        private static void TryToReachAnInternetPage()
+        {
             // Can we reach a page on the internet?
             WebRequest request = HttpWebRequest.Create(testInternetUri);
             WebResponse response = request.GetResponse();
@@ -69,26 +113,52 @@ namespace Algae.WcfCobraTestClient
                     Debug.Print(result);
                 }
             }
+        }
 
-            // Can we reach the default iis page on the LAN?
-            request = HttpWebRequest.Create(testLanUri);
-            response = request.GetResponse();
-            using (var reader = new StreamReader(response.GetResponseStream()))
+        private static void InitializeFezCobraIIEthernetPort()
+        {
+            // Initialize FEZ Cobra II built-in Ethernet port
+            eth = new EthernetENC28J60(SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
+
+            eth.NetworkAddressChanged += Eth_NetworkAddressChanged;
+            eth.CableConnectivityChanged += Eth_CableConnectivityChanged;
+
+            if (!eth.IsOpen)
             {
-                string result = reader.ReadLine();
-                if (result.Length > 0)
-                {
-                    Debug.Print("Connected to the default iis page on the lan");
-                    Debug.Print(result);                
-                }
+                eth.Open();
             }
 
-            // Can we connect to the WCF Http Service?
-            var isConnectedToWcfService = ConnectToWcfServiceViaHttp();
-            if (isConnectedToWcfService)
+            NetworkInterfaceExtension.AssignNetworkingStackTo(eth);
+
+            if (!eth.NetworkInterface.IsDhcpEnabled)
             {
-                Debug.Print("Connected to WCF Service!");
+                eth.NetworkInterface.EnableDhcp();
             }
+
+            // Required to kick DHCP into action
+            eth.NetworkInterface.RenewDhcpLease();
+        }
+
+        private static void LoopUntilWeHaveAnIpAddress()
+        {
+            // Loop until we're connected.
+            int i = 0;
+            while (eth.NetworkInterface.IPAddress.Equals(zeroIpAddress))
+            {
+                ++i;
+                Debug.Print("Awaiting a non-zero IP address. Loop #" + i.ToString());
+                Thread.Sleep(moderateSleep);
+            }
+        }
+
+        private static void DoFlashing(uint data1, uint data2, DateTime time)
+        {
+            doFlashing = true;
+        }
+
+        private static void DoNotDoFlashing(uint data1, uint data2, DateTime time)
+        {
+            doFlashing = false;
         }
 
         private static bool ConnectToWcfServiceViaHttp()
