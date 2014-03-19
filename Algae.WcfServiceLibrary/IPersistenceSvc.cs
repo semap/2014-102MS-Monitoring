@@ -7,7 +7,9 @@ using System.Text;
 
 namespace Algae.WcfServiceLibrary
 {
-    [ServiceContract(Name = "IPersistenceSvc", Namespace = "urn:SingularBiogenics/Aquaponics/2014/03")]
+    /// <summary>
+    /// </summary>
+    [ServiceContract(Name = "IPersistenceSvc")]
     public interface IPersistenceSvc
     {
         /// <summary>

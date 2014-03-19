@@ -13,9 +13,9 @@ namespace Algae.WcfCobraTestClient
     using GHI.Premium.Net;
     using Microsoft.SPOT;
     using Microsoft.SPOT.Hardware;
+    using schemas.datacontract.org.Algae.WcfServiceLibrary;
     using tempuri.org;
     using Ws.Services.Binding;
-    using schemas.datacontract.org.Algae.WcfServiceLibrary;
 
     public class Program
     {
@@ -76,7 +76,6 @@ namespace Algae.WcfCobraTestClient
             {
                 int i = 0;
                 ++i;
-                // Hmm. What do to.
             }
         }
 
@@ -206,8 +205,10 @@ namespace Algae.WcfCobraTestClient
 
                 Send send = new Send();
                 send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
-                send.data.SbcData = new SbcData[] {
-                    new SbcData () {
+                send.data.SbcData = new SbcData[] 
+                {
+                    new SbcData()
+                    {
                         Data = sendCounter.ToString(), 
                         SensorGuid = new Guid().ToString()                        
                     }

@@ -19,7 +19,7 @@ namespace Algae.WcfServiceLibrary
         {
             if (data == null || data.Length == 0 || data[0] == null)
             {
-                data = CreateTestSbcDataArray();
+                return;
             }
 
             for (int i = 0; i < data.Length; ++i)
@@ -41,30 +41,16 @@ namespace Algae.WcfServiceLibrary
             builder.AppendFormat("Data:{0}", datum.Data);
             builder.AppendLine();
 
-            ////builder.AppendFormat("DataType:{0}", datum.DataType);
-            ////builder.AppendLine();
+            builder.AppendFormat("DataType:{0}", datum.DataType);
+            builder.AppendLine();
 
-            ////builder.AppendFormat("DataMetric:{0}", datum.DataMetric);
-            ////builder.AppendLine();
+            builder.AppendFormat("DataMetric:{0}", datum.DataMetric);
+            builder.AppendLine();
 
-            ////builder.AppendFormat("Timestamp:{0}", datum.Timestamp);
-            ////builder.AppendLine();
+            builder.AppendFormat("Timestamp:{0}", datum.Timestamp);
+            builder.AppendLine();
 
             return builder.ToString();
-        }
-
-        private SbcData[] CreateTestSbcDataArray()
-        {
-            SbcData[] data = new SbcData[] {
-                    new SbcData() {
-                        SensorGuid = new Guid().ToString()
-                        ,Data = "12"
-                        //,DataType = typeof(Int16)
-                        //,DataMetric = DataMetric.Celsius
-                        //,Timestamp = DateTime.Now
-                    }
-                };
-            return data;
         }
 
         private const string sendLogFileName = "sendLog.txt";
@@ -78,7 +64,7 @@ namespace Algae.WcfServiceLibrary
             // The using statement automatically closes the stream and calls  
             // IDisposable.Dispose on the stream object. 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(logFile, true))
-            {
+            {                
                 file.WriteLine("-----");
                 file.WriteLine(textToAppend);
             }
