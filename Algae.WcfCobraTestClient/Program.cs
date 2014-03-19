@@ -193,6 +193,8 @@ namespace Algae.WcfCobraTestClient
             {
                 sendCounter++;
 
+                // this garbage collecting is just for testing.
+                // it probably slows things down to do it every loop
                 Debug.GC(true);
                 GC.WaitForPendingFinalizers();
 
