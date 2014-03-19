@@ -7,21 +7,21 @@ using System.Text;
 
 namespace Algae.WcfServiceLibrary
 {
-    [ServiceContract]
+    [ServiceContract(Name = "IPersistenceSvc", Namespace = "urn:SingularBiogenics/Aquaponics/2014/03")]
     public interface IPersistenceSvc
     {
         /// <summary>
         /// Determine whether the network is connected.
         /// </summary>
         /// <returns>True if connected, otherwise false.</returns>
-        [OperationContract]
+        [OperationContract(Name = "IsConnected")]
         bool IsConnected();
 
         /// <summary>
         /// Send data to the Persistence service.
         /// </summary>
         /// <param name="data">The data to send.</param>
-        [OperationContract]
+        [OperationContract(Name = "Send")]
         void Send(SbcData[] data);
     }    
 }

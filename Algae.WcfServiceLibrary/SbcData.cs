@@ -10,34 +10,40 @@ namespace Algae.WcfServiceLibrary
     /// <summary>
     /// Allows the client to specify the metric of data.
     /// </summary>
-    [DataContract]
-    public enum DataMetric { 
+    [DataContract(Name = "DataMetric", Namespace = "urn:SingularBiogenics/Schema/2014/03", IsReference = false)]
+    public enum DataMetric
+    {
         [EnumMember]
         Celsius,
         [EnumMember]
         OnOff,
         [EnumMember]
-        Moles 
+        Moles
     }
 
-    [DataContract]
+    [DataContract(Name = "SbcData", Namespace = "urn:SingularBiogenics/Schema/2014/03", IsReference = false)]
     public class SbcData
     {
         /// <summary>
         /// uniquely identifies the sensor
         /// </summary>
-        [DataMember]
+        [DataMember(Name = "SensorGuid", Order = 1, IsRequired = false, EmitDefaultValue = true)]
         public string SensorGuid { get; set; }
         /// <summary>
         /// the actual data collected (a byte[] might be better than a string)
         /// </summary>
-        [DataMember]
+        [DataMember(Name = "Data", Order = 2, IsRequired = false, EmitDefaultValue = true)]
         public string Data { get; set; }
+        /// <summary>
+        /// the time at which the sensor collected data
+        /// </summary>
+        [DataMember(Name = "Timestamp", Order = 3, IsRequired = false, EmitDefaultValue = true)]
+        public DateTime Timestamp { get; set; }
+
+
         /// <summary>
         /// the data type of the Data e.g. Integer, String, Float, Decimal
         /// </summary>        
-
-        //// Todo Complex types
         ////[DataMember]
         ////public Type DataType { get; set; }
         /////// <summary>
@@ -45,10 +51,6 @@ namespace Algae.WcfServiceLibrary
         /////// </summary>
         ////[DataMember]
         ////public DataMetric DataMetric { get; set; }
-        /////// <summary>
-        /////// the time at which the sensor collected data
-        /////// </summary>
-        ////[DataMember]
-        ////public DateTime Timestamp { get; set; }
+
     }
 }
