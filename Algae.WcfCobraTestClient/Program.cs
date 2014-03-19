@@ -66,8 +66,8 @@ namespace Algae.WcfCobraTestClient
                 send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
                 send.data.SbcData = new SbcData[] {
                     new SbcData () {
-                        Data = "07", 
-                        SensorGuid = new Guid().ToString()
+                        Data = DateTime.Now.ToString("ddd dd MMM yyyy @ hh:mm:ss tt"), 
+                        SensorGuid = new Guid().ToString()                        
                     }
                 };
                 SendResponse response = proxy.Send(send);                
