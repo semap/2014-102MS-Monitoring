@@ -26,6 +26,11 @@ namespace Algae.WcfCobraTestClient
         private static string testLanUri = "http://192.168.1.102:80";
         private static string wcfServiceEndpointUri = "http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/";
 
+        // timer
+        // note: this is private static to prevent garbage collection
+        // see also http://stackoverflow.com/questions/477351/in-c-where-should-i-keep-my-timers-reference
+        private static Timer timer;
+
         // flash led
         private static OutputPort led1 = new OutputPort(GHI.Hardware.G120.Pin.P1_15, true);
         private static bool doFlashing = false;
@@ -65,18 +70,20 @@ namespace Algae.WcfCobraTestClient
             {
                 ConnectWcfProxy();
                 SendTestDataToWcfServiceViaHttp(proxy);
+                Flash();
             }
             catch (Exception)
-            { 
+            {
+                int i = 0;
+                ++i;
                 // Hmm. What do to.
             }
-            Flash();
         }
 
         private static void PreventTheThreadFromExiting()
         {
             doFlashing = true;
-            Timer timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);
+            timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);
         }
 
         private static void TryToConnectToTheWcfService()
@@ -186,6 +193,15 @@ namespace Algae.WcfCobraTestClient
             {
                 sendCounter++;
 
+                Debug.GC(true);
+                GC.WaitForPendingFinalizers();
+
+                if (sendCounter > 43)
+                {
+                    int i = 0;
+                    ++i;
+                }
+
                 Send send = new Send();
                 send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
                 send.data.SbcData = new SbcData[] {
@@ -194,7 +210,7 @@ namespace Algae.WcfCobraTestClient
                         SensorGuid = new Guid().ToString()                        
                     }
                 };
-                SendResponse response = proxy.Send(send);
+                proxy.Send(send);                                
             }
         }
 
