@@ -15,13 +15,13 @@ namespace Algae.WcfServiceLibrary
             return true;
         }
 
-        public void Send(SbcData[] data)        
+        public void Send(SbcData[] data)
         {
             if (data == null || data.Length == 0 || data[0] == null)
             {
                 data = CreateTestSbcDataArray();
             }
-            
+
             for (int i = 0; i < data.Length; ++i)
             {
                 string datumString = ConvertDatumToString(data[i]);
@@ -38,17 +38,17 @@ namespace Algae.WcfServiceLibrary
             builder.AppendFormat("SensorGuid:{0}", datum.SensorGuid);
             builder.AppendLine();
 
-            builder.AppendFormat("Timestamp:{0}", datum.Timestamp);
-            builder.AppendLine();
-
             builder.AppendFormat("Data:{0}", datum.Data);
             builder.AppendLine();
 
-            builder.AppendFormat("DataType:{0}", datum.DataType);
-            builder.AppendLine();
+            ////builder.AppendFormat("DataType:{0}", datum.DataType);
+            ////builder.AppendLine();
 
-            builder.AppendFormat("DataMetric:{0}", datum.DataMetric);
-            builder.AppendLine();
+            ////builder.AppendFormat("DataMetric:{0}", datum.DataMetric);
+            ////builder.AppendLine();
+
+            ////builder.AppendFormat("Timestamp:{0}", datum.Timestamp);
+            ////builder.AppendLine();
 
             return builder.ToString();
         }
@@ -57,11 +57,11 @@ namespace Algae.WcfServiceLibrary
         {
             SbcData[] data = new SbcData[] {
                     new SbcData() {
-                        SensorGuid = new Guid().ToString(),
-                        Timestamp = DateTime.Now,
-                        Data = "12",
-                        DataType = typeof(Int16),
-                        DataMetric = DataMetric.Celsius
+                        SensorGuid = new Guid().ToString()
+                        ,Data = "12"
+                        //,DataType = typeof(Int16)
+                        //,DataMetric = DataMetric.Celsius
+                        //,Timestamp = DateTime.Now
                     }
                 };
             return data;

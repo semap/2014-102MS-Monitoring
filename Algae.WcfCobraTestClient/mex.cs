@@ -231,6 +231,12 @@ namespace schemas.datacontract.org.Algae.WcfServiceLibrary
     [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary")]
     public class SbcData
     {
+        
+        [DataMember(Order=0, IsNillable=true, IsRequired=false)]
+        public string Data;
+        
+        [DataMember(Order=1, IsNillable=true, IsRequired=false)]
+        public string SensorGuid;
     }
     
     public class SbcDataDataContractSerializer : DataContractSerializer
@@ -253,6 +259,18 @@ namespace schemas.datacontract.org.Algae.WcfServiceLibrary
             {
                 SbcDataField = new SbcData();
                 reader.Read();
+                if (IsChildStartElement(reader, "Data", true, false))
+                {
+                    reader.Read();
+                    SbcDataField.Data = reader.ReadString();
+                    reader.ReadEndElement();
+                }
+                if (IsChildStartElement(reader, "SensorGuid", true, false))
+                {
+                    reader.Read();
+                    SbcDataField.SensorGuid = reader.ReadString();
+                    reader.ReadEndElement();
+                }
                 reader.ReadEndElement();
             }
             return SbcDataField;
@@ -263,6 +281,16 @@ namespace schemas.datacontract.org.Algae.WcfServiceLibrary
             SbcData SbcDataField = ((SbcData)(graph));
             if (WriteParentElement(writer, true, true, graph))
             {
+                if (WriteChildElement(writer, "Data", true, false, SbcDataField.Data))
+                {
+                    writer.WriteString(SbcDataField.Data);
+                    writer.WriteEndElement();
+                }
+                if (WriteChildElement(writer, "SensorGuid", true, false, SbcDataField.SensorGuid))
+                {
+                    writer.WriteString(SbcDataField.SensorGuid);
+                    writer.WriteEndElement();
+                }
                 writer.WriteEndElement();
             }
             return;

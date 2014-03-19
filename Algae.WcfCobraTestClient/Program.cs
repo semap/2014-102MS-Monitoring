@@ -15,6 +15,7 @@ namespace Algae.WcfCobraTestClient
     using Microsoft.SPOT.Hardware;
     using tempuri.org;
     using Ws.Services.Binding;
+    using schemas.datacontract.org.Algae.WcfServiceLibrary;
 
     public class Program
     {
@@ -34,10 +35,10 @@ namespace Algae.WcfCobraTestClient
             new InterruptPort(GHI.Hardware.G120.Pin.P0_22, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
 
         private static InterruptPort lrd0 =
-            new InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);        
+            new InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
 
         public static void Main()
-        {                        
+        {
             lrd0.OnInterrupt += DoFlashing;
             lrd1.OnInterrupt += DoNotDoFlashing;
 
@@ -58,10 +59,18 @@ namespace Algae.WcfCobraTestClient
         {
             IPersistenceSvcClientProxy proxy;
             ConnectToWcfServiceViaHttp(out proxy);
+
             if (proxy.IsConnected(new IsConnected()).IsConnectedResult)
             {
-                Sbc
-                proxy.Send();
+                Send send = new Send();
+                send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
+                send.data.SbcData = new SbcData[] {
+                    new SbcData () {
+                        Data = "07", 
+                        SensorGuid = new Guid().ToString()
+                    }
+                };
+                SendResponse response = proxy.Send(send);                
             }
 
             if (doFlashing)
@@ -78,7 +87,7 @@ namespace Algae.WcfCobraTestClient
         private static void PreventTheThreadFromExiting()
         {
             doFlashing = true;
-            Timer timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);            
+            Timer timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);
         }
 
         private static void TryToConnectToTheWcfService()
@@ -88,7 +97,7 @@ namespace Algae.WcfCobraTestClient
             var isConnectedToWcfService = ConnectToWcfServiceViaHttp(out proxy);
             if (isConnectedToWcfService)
             {
-                Debug.Print("Connected to WCF Service!");                
+                Debug.Print("Connected to WCF Service!");
             }
         }
 

@@ -17,7 +17,8 @@ namespace Algae.WcfServiceLibrary
         [EnumMember]
         OnOff,
         [EnumMember]
-        Moles }
+        Moles 
+    }
 
     [DataContract]
     public class SbcData
@@ -28,24 +29,26 @@ namespace Algae.WcfServiceLibrary
         [DataMember]
         public string SensorGuid { get; set; }
         /// <summary>
-        /// the time at which the sensor collected data
-        /// </summary>
-        [DataMember]
-        public DateTime Timestamp { get; set; }
-        /// <summary>
         /// the actual data collected (a byte[] might be better than a string)
         /// </summary>
         [DataMember]
         public string Data { get; set; }
         /// <summary>
         /// the data type of the Data e.g. Integer, String, Float, Decimal
-        /// </summary>
-        [DataMember]
-        public Type DataType { get; set; }
-        /// <summary>
-        /// the metric of the Data e.g. Celsius
-        /// </summary>
-        [DataMember]
-        public DataMetric DataMetric { get; set; }
+        /// </summary>        
+
+        //// Todo Complex types
+        ////[DataMember]
+        ////public Type DataType { get; set; }
+        /////// <summary>
+        /////// the metric of the Data e.g. Celsius
+        /////// </summary>
+        ////[DataMember]
+        ////public DataMetric DataMetric { get; set; }
+        /////// <summary>
+        /////// the time at which the sensor collected data
+        /////// </summary>
+        ////[DataMember]
+        ////public DateTime Timestamp { get; set; }
     }
 }
