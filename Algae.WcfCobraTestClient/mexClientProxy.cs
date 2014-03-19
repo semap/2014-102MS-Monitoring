@@ -39,21 +39,21 @@ namespace tempuri.org
             m_requestChannel = m_localBinding.CreateClientChannel(new ClientBindingContext(m_version));
         }
         
-        public virtual IsActiveResponse IsActive(IsActive req)
+        public virtual IsConnectedResponse IsConnected(IsConnected req)
         {
 
             // Create request header
             String action;
-            action = "http://tempuri.org/IPersistenceSvc/IsActive";
+            action = "http://tempuri.org/IPersistenceSvc/IsConnected";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, req, WsPrefix.None);
 
             // Create request serializer
-            IsActiveDataContractSerializer reqDcs;
-            reqDcs = new IsActiveDataContractSerializer("IsActive", "http://tempuri.org/");
+            IsConnectedDataContractSerializer reqDcs;
+            reqDcs = new IsConnectedDataContractSerializer("IsConnected", "http://tempuri.org/");
             request.Serializer = reqDcs;
-            request.Method = "IsActive";
+            request.Method = "IsConnected";
 
 
             // Send service request
@@ -62,10 +62,42 @@ namespace tempuri.org
             m_requestChannel.Close();
 
             // Process response
-            IsActiveResponseDataContractSerializer respDcs;
-            respDcs = new IsActiveResponseDataContractSerializer("IsActiveResponse", "http://tempuri.org/");
-            IsActiveResponse resp;
-            resp = ((IsActiveResponse)(respDcs.ReadObject(response.Reader)));
+            IsConnectedResponseDataContractSerializer respDcs;
+            respDcs = new IsConnectedResponseDataContractSerializer("IsConnectedResponse", "http://tempuri.org/");
+            IsConnectedResponse resp;
+            resp = ((IsConnectedResponse)(respDcs.ReadObject(response.Reader)));
+            response.Reader.Dispose();
+            response.Reader = null;
+            return resp;
+        }
+        
+        public virtual SendResponse Send(Send req)
+        {
+
+            // Create request header
+            String action;
+            action = "http://tempuri.org/IPersistenceSvc/Send";
+            WsWsaHeader header;
+            header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
+            WsMessage request = new WsMessage(header, req, WsPrefix.None);
+
+            // Create request serializer
+            SendDataContractSerializer reqDcs;
+            reqDcs = new SendDataContractSerializer("Send", "http://tempuri.org/");
+            request.Serializer = reqDcs;
+            request.Method = "Send";
+
+
+            // Send service request
+            m_requestChannel.Open();
+            WsMessage response = m_requestChannel.Request(request);
+            m_requestChannel.Close();
+
+            // Process response
+            SendResponseDataContractSerializer respDcs;
+            respDcs = new SendResponseDataContractSerializer("SendResponse", "http://tempuri.org/");
+            SendResponse resp;
+            resp = ((SendResponse)(respDcs.ReadObject(response.Reader)));
             response.Reader.Dispose();
             response.Reader = null;
             return resp;

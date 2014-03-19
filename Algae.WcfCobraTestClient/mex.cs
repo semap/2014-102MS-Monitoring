@@ -26,38 +26,38 @@ namespace tempuri.org
     
     
     [DataContract(Namespace="http://tempuri.org/")]
-    public class IsActive
+    public class IsConnected
     {
     }
     
-    public class IsActiveDataContractSerializer : DataContractSerializer
+    public class IsConnectedDataContractSerializer : DataContractSerializer
     {
         
-        public IsActiveDataContractSerializer(string rootName, string rootNameSpace) : 
+        public IsConnectedDataContractSerializer(string rootName, string rootNameSpace) : 
                 base(rootName, rootNameSpace)
         {
         }
         
-        public IsActiveDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+        public IsConnectedDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
                 base(rootName, rootNameSpace, localNameSpace)
         {
         }
         
         public override object ReadObject(XmlReader reader)
         {
-            IsActive IsActiveField = null;
+            IsConnected IsConnectedField = null;
             if (IsParentStartElement(reader, false, true))
             {
-                IsActiveField = new IsActive();
+                IsConnectedField = new IsConnected();
                 reader.Read();
                 reader.ReadEndElement();
             }
-            return IsActiveField;
+            return IsConnectedField;
         }
         
         public override void WriteObject(XmlWriter writer, object graph)
         {
-            IsActive IsActiveField = ((IsActive)(graph));
+            IsConnected IsConnectedField = ((IsConnected)(graph));
             if (WriteParentElement(writer, true, true, graph))
             {
                 writer.WriteEndElement();
@@ -67,54 +67,145 @@ namespace tempuri.org
     }
     
     [DataContract(Namespace="http://tempuri.org/")]
-    public class IsActiveResponse
+    public class IsConnectedResponse
     {
         
         [DataMember(Order=0, IsRequired=false)]
-        public bool IsActiveResult;
+        public bool IsConnectedResult;
     }
     
-    public class IsActiveResponseDataContractSerializer : DataContractSerializer
+    public class IsConnectedResponseDataContractSerializer : DataContractSerializer
     {
         
-        public IsActiveResponseDataContractSerializer(string rootName, string rootNameSpace) : 
+        public IsConnectedResponseDataContractSerializer(string rootName, string rootNameSpace) : 
                 base(rootName, rootNameSpace)
         {
         }
         
-        public IsActiveResponseDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+        public IsConnectedResponseDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
                 base(rootName, rootNameSpace, localNameSpace)
         {
         }
         
         public override object ReadObject(XmlReader reader)
         {
-            IsActiveResponse IsActiveResponseField = null;
+            IsConnectedResponse IsConnectedResponseField = null;
             if (IsParentStartElement(reader, false, true))
             {
-                IsActiveResponseField = new IsActiveResponse();
+                IsConnectedResponseField = new IsConnectedResponse();
                 reader.Read();
-                if (IsChildStartElement(reader, "IsActiveResult", false, false))
+                if (IsChildStartElement(reader, "IsConnectedResult", false, false))
                 {
                     reader.Read();
-                    IsActiveResponseField.IsActiveResult = XmlConvert.ToBoolean(reader.ReadString());
+                    IsConnectedResponseField.IsConnectedResult = XmlConvert.ToBoolean(reader.ReadString());
                     reader.ReadEndElement();
                 }
                 reader.ReadEndElement();
             }
-            return IsActiveResponseField;
+            return IsConnectedResponseField;
         }
         
         public override void WriteObject(XmlWriter writer, object graph)
         {
-            IsActiveResponse IsActiveResponseField = ((IsActiveResponse)(graph));
+            IsConnectedResponse IsConnectedResponseField = ((IsConnectedResponse)(graph));
             if (WriteParentElement(writer, true, true, graph))
             {
-                if (WriteChildElement(writer, "IsActiveResult", false, false, IsActiveResponseField.IsActiveResult))
+                if (WriteChildElement(writer, "IsConnectedResult", false, false, IsConnectedResponseField.IsConnectedResult))
                 {
-                    writer.WriteString(XmlConvert.ToString(IsActiveResponseField.IsActiveResult));
+                    writer.WriteString(XmlConvert.ToString(IsConnectedResponseField.IsConnectedResult));
                     writer.WriteEndElement();
                 }
+                writer.WriteEndElement();
+            }
+            return;
+        }
+    }
+    
+    [DataContract(Namespace="http://tempuri.org/")]
+    public class Send
+    {
+        
+        [DataMember(Order=0, IsNillable=true, IsRequired=false)]
+        public schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData data;
+    }
+    
+    public class SendDataContractSerializer : DataContractSerializer
+    {
+        
+        public SendDataContractSerializer(string rootName, string rootNameSpace) : 
+                base(rootName, rootNameSpace)
+        {
+        }
+        
+        public SendDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+                base(rootName, rootNameSpace, localNameSpace)
+        {
+        }
+        
+        public override object ReadObject(XmlReader reader)
+        {
+            Send SendField = null;
+            if (IsParentStartElement(reader, false, true))
+            {
+                SendField = new Send();
+                reader.Read();
+                schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcDataDataContractSerializer dataDCS = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcDataDataContractSerializer("data", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary");
+                dataDCS.BodyParts = this.BodyParts;
+                SendField.data = ((schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData)(dataDCS.ReadObject(reader)));
+                reader.ReadEndElement();
+            }
+            return SendField;
+        }
+        
+        public override void WriteObject(XmlWriter writer, object graph)
+        {
+            Send SendField = ((Send)(graph));
+            if (WriteParentElement(writer, true, true, graph))
+            {
+                schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcDataDataContractSerializer dataDCS = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcDataDataContractSerializer("data", "http://tempuri.org/", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary");
+                dataDCS.BodyParts = this.BodyParts;
+                dataDCS.WriteObject(writer, SendField.data);
+                writer.WriteEndElement();
+            }
+            return;
+        }
+    }
+    
+    [DataContract(Namespace="http://tempuri.org/")]
+    public class SendResponse
+    {
+    }
+    
+    public class SendResponseDataContractSerializer : DataContractSerializer
+    {
+        
+        public SendResponseDataContractSerializer(string rootName, string rootNameSpace) : 
+                base(rootName, rootNameSpace)
+        {
+        }
+        
+        public SendResponseDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+                base(rootName, rootNameSpace, localNameSpace)
+        {
+        }
+        
+        public override object ReadObject(XmlReader reader)
+        {
+            SendResponse SendResponseField = null;
+            if (IsParentStartElement(reader, false, true))
+            {
+                SendResponseField = new SendResponse();
+                reader.Read();
+                reader.ReadEndElement();
+            }
+            return SendResponseField;
+        }
+        
+        public override void WriteObject(XmlWriter writer, object graph)
+        {
+            SendResponse SendResponseField = ((SendResponse)(graph));
+            if (WriteParentElement(writer, true, true, graph))
+            {
                 writer.WriteEndElement();
             }
             return;
@@ -126,7 +217,116 @@ namespace tempuri.org
     public interface IIPersistenceSvc
     {
         
-        [OperationContract(Action="http://tempuri.org/IPersistenceSvc/IsActive")]
-        IsActiveResponse IsActive(IsActive req);
+        [OperationContract(Action="http://tempuri.org/IPersistenceSvc/IsConnected")]
+        IsConnectedResponse IsConnected(IsConnected req);
+        
+        [OperationContract(Action="http://tempuri.org/IPersistenceSvc/Send")]
+        SendResponse Send(Send req);
+    }
+}
+namespace schemas.datacontract.org.Algae.WcfServiceLibrary
+{
+    
+    
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary")]
+    public class SbcData
+    {
+    }
+    
+    public class SbcDataDataContractSerializer : DataContractSerializer
+    {
+        
+        public SbcDataDataContractSerializer(string rootName, string rootNameSpace) : 
+                base(rootName, rootNameSpace)
+        {
+        }
+        
+        public SbcDataDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+                base(rootName, rootNameSpace, localNameSpace)
+        {
+        }
+        
+        public override object ReadObject(XmlReader reader)
+        {
+            SbcData SbcDataField = null;
+            if (IsParentStartElement(reader, false, true))
+            {
+                SbcDataField = new SbcData();
+                reader.Read();
+                reader.ReadEndElement();
+            }
+            return SbcDataField;
+        }
+        
+        public override void WriteObject(XmlWriter writer, object graph)
+        {
+            SbcData SbcDataField = ((SbcData)(graph));
+            if (WriteParentElement(writer, true, true, graph))
+            {
+                writer.WriteEndElement();
+            }
+            return;
+        }
+    }
+    
+    [DataContract(Namespace="http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary")]
+    public class ArrayOfSbcData
+    {
+        
+        [DataMember(Order=0, IsNillable=true, IsRequired=false)]
+        public SbcData[] SbcData;
+    }
+    
+    public class ArrayOfSbcDataDataContractSerializer : DataContractSerializer
+    {
+        
+        public ArrayOfSbcDataDataContractSerializer(string rootName, string rootNameSpace) : 
+                base(rootName, rootNameSpace)
+        {
+        }
+        
+        public ArrayOfSbcDataDataContractSerializer(string rootName, string rootNameSpace, string localNameSpace) : 
+                base(rootName, rootNameSpace, localNameSpace)
+        {
+        }
+        
+        public override object ReadObject(XmlReader reader)
+        {
+            ArrayOfSbcData ArrayOfSbcDataField = null;
+            if (IsParentStartElement(reader, false, true))
+            {
+                ArrayOfSbcDataField = new ArrayOfSbcData();
+                reader.Read();
+                SbcDataDataContractSerializer SbcDataDCS = new SbcDataDataContractSerializer("SbcData", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary");
+                System.Collections.ArrayList SbcData_List = new System.Collections.ArrayList();
+                for (int i = 0; (i > -1); i = (i + 1))
+                {
+                    if (!IsChildStartElement(reader, "SbcData", false, false))
+                    {
+                        ArrayOfSbcDataField.SbcData = new SbcData[SbcData_List.Count];
+                        SbcData_List.CopyTo(ArrayOfSbcDataField.SbcData);
+						break;
+                    }
+                    SbcData_List.Add(((SbcData)(SbcDataDCS.ReadObject(reader))));
+                }
+                reader.ReadEndElement();
+            }
+            return ArrayOfSbcDataField;
+        }
+        
+        public override void WriteObject(XmlWriter writer, object graph)
+        {
+            ArrayOfSbcData ArrayOfSbcDataField = ((ArrayOfSbcData)(graph));
+            if (WriteParentElement(writer, true, true, graph))
+            {
+                SbcDataDataContractSerializer SbcDataDCS = new SbcDataDataContractSerializer("SbcData", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary", "http://schemas.datacontract.org/2004/07/Algae.WcfServiceLibrary");
+                for (int i = 0; (i < ArrayOfSbcDataField.SbcData.Length); i = (i + 1))
+                {
+                    SbcDataDCS.WriteObject(writer, ArrayOfSbcDataField.SbcData[i]);
+                }
+                writer.WriteEndElement();
+            }
+            return;
+        }
     }
 }

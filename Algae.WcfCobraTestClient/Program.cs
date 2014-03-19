@@ -54,8 +54,16 @@ namespace Algae.WcfCobraTestClient
             PreventTheThreadFromExiting();
         }
 
-        private static void TimerCallback_FlashLed1(object stateInfo)
+        private static void TimerCallback_SendSbcData(object stateInfo)
         {
+            IPersistenceSvcClientProxy proxy;
+            ConnectToWcfServiceViaHttp(out proxy);
+            if (proxy.IsConnected(new IsConnected()).IsConnectedResult)
+            {
+                Sbc
+                proxy.Send();
+            }
+
             if (doFlashing)
             {
                 bool isOn = led1.Read();
@@ -70,13 +78,14 @@ namespace Algae.WcfCobraTestClient
         private static void PreventTheThreadFromExiting()
         {
             doFlashing = true;
-            Timer timer = new Timer(TimerCallback_FlashLed1, new object(), 0, 1000);            
+            Timer timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);            
         }
 
         private static void TryToConnectToTheWcfService()
         {
             // Can we connect to the WCF Http Service?
-            var isConnectedToWcfService = ConnectToWcfServiceViaHttp();
+            IPersistenceSvcClientProxy proxy;
+            var isConnectedToWcfService = ConnectToWcfServiceViaHttp(out proxy);
             if (isConnectedToWcfService)
             {
                 Debug.Print("Connected to WCF Service!");                
@@ -161,23 +170,22 @@ namespace Algae.WcfCobraTestClient
             doFlashing = false;
         }
 
-        private static bool ConnectToWcfServiceViaHttp()
+        private static bool ConnectToWcfServiceViaHttp(out IPersistenceSvcClientProxy proxy)
         {
             Uri serviceUri = new System.Uri(wcfServiceEndpointUri);
             HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
             WS2007HttpBinding binding = new WS2007HttpBinding(config);
-            IPersistenceSvcClientProxy proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
+            proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
             var result = false;
             try
             {
-                IsActiveResponse resp = proxy.IsActive(new IsActive());
-                result = resp.IsActiveResult;
+                IsConnectedResponse resp = proxy.IsConnected(new IsConnected());
+                result = resp.IsConnectedResult;
             }
             catch (Exception e)
             {
                 string m = e.Message;
             }
-
             return result;
         }
 
