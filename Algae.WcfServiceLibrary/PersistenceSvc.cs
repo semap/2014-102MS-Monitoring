@@ -15,9 +15,13 @@ namespace Algae.WcfServiceLibrary
             return true;
         }
 
-        public void Send(SbcData[] data)
+        public void Send(SbcData[] data)        
         {
-            data = CreateTestSbcDataArray();
+            if (data == null || data.Length == 0 || data[0] == null)
+            {
+                data = CreateTestSbcDataArray();
+            }
+            
             for (int i = 0; i < data.Length; ++i)
             {
                 string datumString = ConvertDatumToString(data[i]);
