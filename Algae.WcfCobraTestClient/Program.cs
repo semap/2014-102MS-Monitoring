@@ -37,6 +37,10 @@ namespace Algae.WcfCobraTestClient
         private static InterruptPort lrd0 =
             new InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
 
+        // wcf proxy
+        private static int sendCounter = 0;
+        private static IPersistenceSvcClientProxy proxy;
+
         public static void Main()
         {
             lrd0.OnInterrupt += DoFlashing;
@@ -57,31 +61,16 @@ namespace Algae.WcfCobraTestClient
 
         private static void TimerCallback_SendSbcData(object stateInfo)
         {
-            IPersistenceSvcClientProxy proxy;
-            ConnectToWcfServiceViaHttp(out proxy);
-
-            if (proxy.IsConnected(new IsConnected()).IsConnectedResult)
+            try
             {
-                Send send = new Send();
-                send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
-                send.data.SbcData = new SbcData[] {
-                    new SbcData () {
-                        Data = DateTime.Now.ToString("ddd dd MMM yyyy @ hh:mm:ss tt"), 
-                        SensorGuid = new Guid().ToString()                        
-                    }
-                };
-                SendResponse response = proxy.Send(send);                
+                ConnectWcfProxy();
+                SendTestDataToWcfServiceViaHttp(proxy);
             }
-
-            if (doFlashing)
-            {
-                bool isOn = led1.Read();
-                led1.Write(!isOn);
+            catch (Exception)
+            { 
+                // Hmm. What do to.
             }
-            else
-            {
-                led1.Write(false);
-            }
+            Flash();
         }
 
         private static void PreventTheThreadFromExiting()
@@ -92,9 +81,8 @@ namespace Algae.WcfCobraTestClient
 
         private static void TryToConnectToTheWcfService()
         {
-            // Can we connect to the WCF Http Service?
-            IPersistenceSvcClientProxy proxy;
-            var isConnectedToWcfService = ConnectToWcfServiceViaHttp(out proxy);
+            // Can we connect to the WCF Http Service?            
+            var isConnectedToWcfService = ConnectWcfProxy();
             if (isConnectedToWcfService)
             {
                 Debug.Print("Connected to WCF Service!");
@@ -169,6 +157,19 @@ namespace Algae.WcfCobraTestClient
             }
         }
 
+        private static void Flash()
+        {
+            if (doFlashing)
+            {
+                bool isOn = led1.Read();
+                led1.Write(!isOn);
+            }
+            else
+            {
+                led1.Write(false);
+            }
+        }
+
         private static void DoFlashing(uint data1, uint data2, DateTime time)
         {
             doFlashing = true;
@@ -179,23 +180,50 @@ namespace Algae.WcfCobraTestClient
             doFlashing = false;
         }
 
-        private static bool ConnectToWcfServiceViaHttp(out IPersistenceSvcClientProxy proxy)
+        private static void SendTestDataToWcfServiceViaHttp(IPersistenceSvcClientProxy proxy)
         {
+            if (proxy.IsConnected(new IsConnected()).IsConnectedResult)
+            {
+                sendCounter++;
+
+                Send send = new Send();
+                send.data = new schemas.datacontract.org.Algae.WcfServiceLibrary.ArrayOfSbcData();
+                send.data.SbcData = new SbcData[] {
+                    new SbcData () {
+                        Data = sendCounter.ToString(), 
+                        SensorGuid = new Guid().ToString()                        
+                    }
+                };
+                SendResponse response = proxy.Send(send);
+            }
+        }
+
+        private static bool ConnectWcfProxy()
+        {
+            var isConnected = false;
             Uri serviceUri = new System.Uri(wcfServiceEndpointUri);
             HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
             WS2007HttpBinding binding = new WS2007HttpBinding(config);
-            proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
-            var result = false;
-            try
-            {
-                IsConnectedResponse resp = proxy.IsConnected(new IsConnected());
-                result = resp.IsConnectedResult;
+
+            if (proxy == null)
+            { 
+                proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
             }
-            catch (Exception e)
+
+            while (!isConnected)
             {
-                string m = e.Message;
+                try
+                {
+                    IsConnectedResponse resp = proxy.IsConnected(new IsConnected());
+                    isConnected = resp.IsConnectedResult;
+                }
+                catch (Exception)
+                {
+                    isConnected = false;
+                }
             }
-            return result;
+
+            return isConnected;
         }
 
         private static void ConnectToWcfServiceViaTcp()
