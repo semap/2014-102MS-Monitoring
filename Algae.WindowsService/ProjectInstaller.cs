@@ -14,17 +14,32 @@ namespace Algae.WindowsService
     [RunInstaller(true)]
     public class ProjectInstaller : Installer
     {
-        private ServiceProcessInstaller process;
-        private ServiceInstaller service;
+        private ServiceProcessInstaller serviceProcessInstaller;
+        private ServiceInstaller serviceInstaller;
 
         public ProjectInstaller()
         {
-            process = new ServiceProcessInstaller();
-            process.Account = ServiceAccount.LocalSystem;
-            service = new ServiceInstaller();
-            service.ServiceName = "AlgaePersistenceSvc";
-            Installers.Add(process);
-            Installers.Add(service);
+            // events
+            this.AfterInstall += ProjectInstaller_AfterInstall;
+
+            // service process
+            serviceProcessInstaller = new ServiceProcessInstaller();
+            serviceProcessInstaller.Account = ServiceAccount.LocalSystem;
+            Installers.Add(serviceProcessInstaller);
+
+            // service
+            serviceInstaller = new ServiceInstaller();
+            serviceInstaller.StartType = ServiceStartMode.Automatic;
+            serviceInstaller.ServiceName = "AlgaePersistenceSvc";
+            Installers.Add(serviceInstaller);            
+        }
+
+        private void ProjectInstaller_AfterInstall(object sender, InstallEventArgs e)
+        {
+            using (ServiceController sc = new ServiceController(serviceInstaller.ServiceName))
+            {
+                sc.Start();
+            }
         }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="IPersistenceSvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PersistenceSvc.cs" />
+    <Compile Include="SbcData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

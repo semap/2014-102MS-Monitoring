@@ -10,7 +10,18 @@ namespace Algae.WcfServiceLibrary
     [ServiceContract]
     public interface IPersistenceSvc
     {
+        /// <summary>
+        /// Determine whether the network is connected.
+        /// </summary>
+        /// <returns>True if connected, otherwise false.</returns>
         [OperationContract]
-        bool IsActive();
+        bool IsConnected();
+
+        /// <summary>
+        /// Send data to the Persistence service.
+        /// </summary>
+        /// <param name="data">The data to send.</param>
+        [OperationContract]
+        void Send(SbcData[] data);
     }    
 }
