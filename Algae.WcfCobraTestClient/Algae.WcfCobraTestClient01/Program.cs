@@ -20,8 +20,7 @@ namespace Algae.WcfCobraTestClient
     public class Program
     {
         private static EthernetENC28J60 eth;
-        private static string zeroIpAddress = "0.0.0.0";
-        private static int moderateSleep = 500;
+        private static int moderateTimespan = 1000;
         private static string wcfServiceEndpointUri = "http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/";
 
         // timer
@@ -42,56 +41,63 @@ namespace Algae.WcfCobraTestClient
 
         // wcf proxy
         private static int sendCounter = 0;
-        private static IPersistenceSvcClientProxy proxy;
+        private static IPersistenceSvcClientProxy _proxy;
+        private static IPersistenceSvcClientProxy proxy
+        {
+            get
+            {
+                if (_proxy == null)
+                {
+                    _proxy = CreateWcfProxy();
+                }
+                return _proxy;
+            }            
+        }
 
         public static void Main()
         {
-            lrd0.OnInterrupt += DoFlashing;
-            lrd1.OnInterrupt += DoNotDoFlashing;
+            SetupButtonPressEvents();
 
             InitializeFezCobraIIEthernetPort();
 
-            LoopUntilWeHaveAnIpAddress();
-
-            TryToConnectToTheWcfService();
-
-            PreventTheThreadFromExiting();
+            RepeatedlySendDataToWcfService();
         }
 
-        private static void TimerCallback_SendSbcData(object stateInfo)
+        #region Button Press Events
+
+        private static void FlashLed()
         {
-            try
+            if (doFlashing)
             {
-                ConnectWcfProxy();
-                SendTestDataToWcfServiceViaHttp(proxy);
-                Flash();
+                bool isOn = led1.Read();
+                led1.Write(!isOn);
             }
-            catch (Exception)
+            else
             {
-                int i = 0;
-                ++i;
+                led1.Write(false);
             }
         }
 
-        private static void PreventTheThreadFromExiting()
+        private static void DoFlashing(uint data1, uint data2, DateTime time)
         {
             doFlashing = true;
-            timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);
         }
 
-        private static void TryToConnectToTheWcfService()
+        private static void DoNotDoFlashing(uint data1, uint data2, DateTime time)
         {
-            // Can we connect to the WCF Http Service?            
-            var isConnectedToWcfService = ConnectWcfProxy();
-            if (isConnectedToWcfService)
-            {
-                Debug.Print("Connected to WCF Service!");
-            }
+            doFlashing = false;
         }
+
+        private static void SetupButtonPressEvents()
+        {
+            lrd0.OnInterrupt += DoFlashing;
+            lrd1.OnInterrupt += DoNotDoFlashing;
+        }
+
+        #endregion
 
         private static void InitializeFezCobraIIEthernetPort()
         {
-            // Initialize FEZ Cobra II built-in Ethernet port
             eth = new EthernetENC28J60(SPI.SPI_module.SPI2, Pin.P1_10, Pin.P2_11, Pin.P1_9, 4000);
 
             eth.NetworkAddressChanged += Eth_NetworkAddressChanged;
@@ -113,39 +119,58 @@ namespace Algae.WcfCobraTestClient
             eth.NetworkInterface.RenewDhcpLease();
         }
 
-        private static void LoopUntilWeHaveAnIpAddress()
-        {
-            // Loop until we're connected.
-            int i = 0;
-            while (eth.NetworkInterface.IPAddress.Equals(zeroIpAddress))
-            {
-                ++i;
-                Debug.Print("Awaiting a non-zero IP address. Loop #" + i.ToString());
-                Thread.Sleep(moderateSleep);
-            }
-        }
+        #region Send Data to WCF Service
 
-        private static void Flash()
-        {
-            if (doFlashing)
-            {
-                bool isOn = led1.Read();
-                led1.Write(!isOn);
-            }
-            else
-            {
-                led1.Write(false);
-            }
-        }
-
-        private static void DoFlashing(uint data1, uint data2, DateTime time)
+        private static void RepeatedlySendDataToWcfService()
         {
             doFlashing = true;
+            timer = new Timer(TimerCallback_SendSbcData, new object(), 0, 1000);
         }
 
-        private static void DoNotDoFlashing(uint data1, uint data2, DateTime time)
+        private static void TimerCallback_SendSbcData(object stateInfo)
         {
-            doFlashing = false;
+            try
+            {                    
+                ConnectWcfProxy();
+                SendTestDataToWcfServiceViaHttp(proxy);
+                FlashLed();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Create a Wcf Proxy
+        /// </summary>
+        private static IPersistenceSvcClientProxy CreateWcfProxy()
+        {
+            Uri serviceUri = new System.Uri(wcfServiceEndpointUri);
+            HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
+            WS2007HttpBinding binding = new WS2007HttpBinding(config);
+            IPersistenceSvcClientProxy proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
+            return proxy;
+        }
+
+        /// <summary>
+        /// Keep trying to connect to the Wcf service until connected.
+        /// </summary>
+        private static void ConnectWcfProxy()
+        {
+            var isConnected = false;
+            while (!isConnected)
+            {
+                try
+                {
+                    IsConnectedResponse resp = proxy.IsConnected(new IsConnected());
+                    isConnected = resp.IsConnectedResult;
+                }
+                catch (Exception)
+                {
+                    isConnected = false;
+                }
+            }
         }
 
         private static void SendTestDataToWcfServiceViaHttp(IPersistenceSvcClientProxy proxy)
@@ -172,43 +197,13 @@ namespace Algae.WcfCobraTestClient
                         DataType = DataType.Long
                     }
                 };
-                proxy.Send(send);                                
+                proxy.Send(send);
             }
         }
 
-        private static bool ConnectWcfProxy()
-        {
-            var isConnected = false;
-            Uri serviceUri = new System.Uri(wcfServiceEndpointUri);
-            HttpTransportBindingConfig config = new HttpTransportBindingConfig(serviceUri);
-            WS2007HttpBinding binding = new WS2007HttpBinding(config);
+        #endregion
 
-            if (proxy == null)
-            { 
-                proxy = new IPersistenceSvcClientProxy(binding, new Ws.Services.ProtocolVersion11());
-            }
-
-            while (!isConnected)
-            {
-                try
-                {
-                    IsConnectedResponse resp = proxy.IsConnected(new IsConnected());
-                    isConnected = resp.IsConnectedResult;
-                }
-                catch (Exception)
-                {
-                    isConnected = false;
-                }
-            }
-
-            return isConnected;
-        }
-
-        private static void ConnectToWcfServiceViaTcp()
-        {
-            // todo 
-            // This will require the creation of a custom WCF binding.
-        }
+        #region Ethernet Events
 
         private static void Eth_CableConnectivityChanged(object sender, EthernetENC28J60.CableConnectivityEventArgs e)
         {
@@ -220,6 +215,13 @@ namespace Algae.WcfCobraTestClient
         private static void Eth_NetworkAddressChanged(object sender, EventArgs e)
         {
             Debug.Print("DHCP assigned IP address: " + eth.NetworkInterface.IPAddress);
+        }
+
+        #endregion
+
+        private static void HandleException(Exception ex)
+        {
+            Debug.Print(ex.Message);
         }
     }
 }
