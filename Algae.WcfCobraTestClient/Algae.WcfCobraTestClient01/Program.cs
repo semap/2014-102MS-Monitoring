@@ -42,7 +42,7 @@ namespace Algae.WcfCobraTestClient01
 
         private void TimerCallback_SendSbcData(object stateInfo)
         {
-            Debug.Print("Send");
+            Debug.Print("Send" + (this.sendCounter += 1));
             SbcData[] data = new SbcData[] 
                 {
                     new SbcData() 
