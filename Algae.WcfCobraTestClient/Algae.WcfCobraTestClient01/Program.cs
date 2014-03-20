@@ -20,6 +20,8 @@ namespace Algae.WcfCobraTestClient
     public class Program
     {
         private static EthernetENC28J60 eth;
+        private static string ZeroIp = "0.0.0.0";
+        private static bool HasIp = false;
         private static int moderateTimespan = 1000;
         private static string wcfServiceEndpointUri = "http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/";
 
@@ -61,6 +63,8 @@ namespace Algae.WcfCobraTestClient
             InitializeFezCobraIIEthernetPort();
 
             RepeatedlySendDataToWcfService();
+
+            Thread.Sleep(Timeout.Infinite);
         }
 
         #region Button Press Events
@@ -129,15 +133,22 @@ namespace Algae.WcfCobraTestClient
 
         private static void TimerCallback_SendSbcData(object stateInfo)
         {
-            try
-            {                    
-                ConnectWcfProxy();
-                SendTestDataToWcfServiceViaHttp(proxy);
-                FlashLed();
-            }
-            catch (Exception ex)
+            if (HasIp)
             {
-                HandleException(ex);
+                try
+                {
+                    ConnectWcfProxy();
+                    SendTestDataToWcfServiceViaHttp(proxy);
+                    FlashLed();
+                }
+                catch (Exception ex)
+                {
+                    HandleException(ex);
+                }
+            }
+            else
+            { 
+                
             }
         }
 
@@ -215,6 +226,7 @@ namespace Algae.WcfCobraTestClient
         private static void Eth_NetworkAddressChanged(object sender, EventArgs e)
         {
             Debug.Print("DHCP assigned IP address: " + eth.NetworkInterface.IPAddress);
+            HasIp = !eth.NetworkInterface.IPAddress.Equals(ZeroIp);
         }
 
         #endregion
