@@ -24,14 +24,16 @@ namespace Algae.WcfCobraTestClient01
         // timer is static to prevent garbage collection
         // see also http://stackoverflow.com/questions/477351/in-c-where-should-i-keep-my-timers-reference
         private static Timer timer;
-        ////private static int sendCounter = 0;
-        ////private static Network network;
+        private static int sendCounter = 0;
+        private static Network network;
         
 
         public static void Main()
         {
-            ////Program.network = new Network();
+            Program.network = new Network();
             RepeatedlySendDataToWcfService();
+
+            Thread.Sleep(Timeout.Infinite);
         }
 
         private static void RepeatedlySendDataToWcfService()
@@ -42,18 +44,18 @@ namespace Algae.WcfCobraTestClient01
         private static void TimerCallback_SendSbcData(object stateInfo)
         {
             Debug.Print("Send");
-            ////SbcData[] data = new SbcData[] 
-            ////    {
-            ////        new SbcData() 
-            ////        {
-            ////            Data = Program.sendCounter.ToString(), 
-            ////            SensorGuid = new Guid().ToString(),
-            ////            Timestamp = DateTime.Now,
-            ////            DataMetric = DataMetric.Celsius,
-            ////            DataType = DataType.Long
-            ////        }
-            ////    };
-            ////Program.network.Send(data);
+            SbcData[] data = new SbcData[] 
+                {
+                    new SbcData() 
+                    {
+                        Data = Program.sendCounter.ToString(), 
+                        SensorGuid = new Guid().ToString(),
+                        Timestamp = DateTime.Now,
+                        DataMetric = DataMetric.Celsius,
+                        DataType = DataType.Long
+                    }
+                };
+            Program.network.Send(data);
         }
     }
 }
