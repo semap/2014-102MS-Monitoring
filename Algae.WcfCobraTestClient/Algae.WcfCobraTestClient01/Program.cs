@@ -19,42 +19,42 @@ namespace Algae.WcfCobraTestClient01
 
     public class Program
     {
-        private static int ModerateTimespan = 1000;
+        private const int ModerateTimespan = 1000;
 
         // timer is static to prevent garbage collection
         // see also http://stackoverflow.com/questions/477351/in-c-where-should-i-keep-my-timers-reference
         private static Timer timer;
-        private static int sendCounter = 0;
-        private static Network network;
+        private int sendCounter = 0;
+        private Network network;
         
-
         public static void Main()
         {
-            Program.network = new Network();
-            RepeatedlySendDataToWcfService();
+            Program p = new Program();
+            p.network = new Network();
+            p.RepeatedlySendDataToWcfService();
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void RepeatedlySendDataToWcfService()
+        private void RepeatedlySendDataToWcfService()
         {
-            timer = new Timer(Program.TimerCallback_SendSbcData, new object(), 0, Program.ModerateTimespan);            
+            Program.timer = new Timer(this.TimerCallback_SendSbcData, new object(), 0, Program.ModerateTimespan);            
         }
 
-        private static void TimerCallback_SendSbcData(object stateInfo)
+        private void TimerCallback_SendSbcData(object stateInfo)
         {
             Debug.Print("Send");
             SbcData[] data = new SbcData[] 
                 {
                     new SbcData() 
                     {
-                        Data = Program.sendCounter.ToString(), 
+                        Data = this.sendCounter.ToString(), 
                         SensorGuid = new Guid().ToString(),
                         Timestamp = DateTime.Now,
                         DataMetric = DataMetric.Celsius,
                         DataType = DataType.Long
                     }
                 };
-            Program.network.Send(data);
+            this.network.Send(data);
         }
     }
 }
