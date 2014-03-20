@@ -56,6 +56,7 @@ namespace Algae.WcfCobraTestClient01
 
         internal void Send(SbcData[] data)
         {
+            // todo Write a better implementation of checking for connection before sending.
             if (this.hasIpAddress)
             { 
                 try
