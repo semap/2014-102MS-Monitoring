@@ -15,12 +15,13 @@
     
 ## Test the hosted WCF Service
 
-1. Run ```services.msc```
-1. Find AlgaePersistenceSvc
-1. Check its Log On As value (e.g. Local System / Network Service / Other)
-1. Start the Service if it isn't already.
-    - If it doesn't start, 
-    - then you might have to give its Log On permissions to the EXE directory.
+1. View it in the Services Management Console
+    - Run ```services.msc```
+    - Find AlgaePersistenceSvc
+    - Check its Log On As value (e.g. Local System / Network Service / Other)
+    - Start the Service if it isn't already.
+        - If it doesn't start, 
+        - then give its Log On permissions to the EXE directory.
 1. Test with a browser.
     - At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/
     - you will see the WCF Help page for PersistenceSvc
