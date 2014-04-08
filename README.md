@@ -37,3 +37,12 @@
 1. The WCFTestClient GUI will open.
 1. File > Add Service > Use the Svc mex.wsdl address (above).
 1. You will be able to call the service's methods.
+
+## Deploy to the Fez Cobra II Net
+
+1. Plug the Cobra II into the PC via USB.
+1. Plug the Cobra II into the LAN via Ethernet.
+1. Right click on Algae.WcfCobraTestClient01 > Deploy
+1. The NETMF project will deploy.
+1. Restart the Cobra II.
+1. The Cobra II will send data to the WCF Service every one second.
