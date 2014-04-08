@@ -15,21 +15,23 @@
     
 ## Test the hosted WCF Service
 
-1. View it in the Services Management Console
-    - Run ```services.msc```
-    - Find AlgaePersistenceSvc
-    - Check its Log On As value (e.g. Local System / Network Service / Other)
-    - Start the Service if it isn't already.
-        - If it doesn't start, 
-        - then give its Log On permissions to the EXE directory.
-1. Test with a browser.
-    - At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/
+### in the Services Management Console
+1. Run ```services.msc```
+1. Find AlgaePersistenceSvc
+1. Check its Log On As value (e.g. Local System / Network Service / Other)
+1. Start the Service if it isn't already.
+    - If it doesn't start, 
+    - then give its Log On permissions to the EXE directory.
+        
+### with a browser.
+1. At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/
     - you will see the WCF Help page for PersistenceSvc
-    - At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/mex.wsdl
-    - You will see the WCF Metadata for PersistenceSvc
-    - During troubleshooting, 
+1. At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/mex.wsdl
+    - you will see the WCF Metadata for PersistenceSvc
+1. During troubleshooting, 
     - it is worth visiting these links from another computer on your LAN
-- Test with the WcfTestClient.
+    
+### with the WcfTestClient.
     - Open a Developer Command Prompt.
     - Run "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\WcfTestClient.exe"
     - The WCFTestClient GUI will open.
