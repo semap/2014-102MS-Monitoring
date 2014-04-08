@@ -32,8 +32,8 @@
     - it is worth visiting these links from another computer on your LAN
     
 ### with the WcfTestClient.
-    - Open a Developer Command Prompt.
-    - Run "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\WcfTestClient.exe"
-    - The WCFTestClient GUI will open.
-    - File > Add Service > Use the Svc mex.wsdl address (above).
-    - You will be able to call the service's methods.
+1. Open a Developer Command Prompt.
+1. Run "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\WcfTestClient.exe"
+1. The WCFTestClient GUI will open.
+1. File > Add Service > Use the Svc mex.wsdl address (above).
+1. You will be able to call the service's methods.
