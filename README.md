@@ -22,7 +22,7 @@
 1. Start the Service if it isn't already.
     - If it doesn't start, 
     - then give its Log On permissions to the EXE directory.
-        
+
 ### with a browser.
 1. At http://192.168.1.102/Algae.WcfServiceLibrary/PersistenceSvc/
     - you will see the WCF Help page for PersistenceSvc
@@ -30,7 +30,7 @@
     - you will see the WCF Metadata for PersistenceSvc
 1. During troubleshooting, 
     - it is worth visiting these links from another computer on your LAN
-    
+
 ### with the WcfTestClient.
 1. Open a Developer Command Prompt.
 1. Run "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\WcfTestClient.exe"
