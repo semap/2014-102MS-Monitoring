@@ -21,28 +21,56 @@ namespace Algae.WcfCobraTestClient01
     {
         private const int ModerateTimespan = 1000;
 
-        // timer is static to prevent garbage collection
+        // static to prevent garbage collection
         // see also http://stackoverflow.com/questions/477351/in-c-where-should-i-keep-my-timers-reference
-        private static Timer timer;
-        private int sendCounter = 0;
+        private static Timer timer;                
+
         private Network network;
-        
+        private int sendCounter = 0;
+        private OutputPort led1 = new OutputPort(GHI.Hardware.G120.Pin.P1_15, true);
+
         public static void Main()
         {
-            Program p = new Program();
-            p.network = new Network();
-            p.RepeatedlySendDataToWcfService();
+            try
+            {
+                Program p = new Program();
+            }
+            catch (Exception ex)
+            {
+                SdCard.WriteException(ex.Message);
+            }
+
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private void RepeatedlySendDataToWcfService()
+        public Program()
         {
-            Program.timer = new Timer(this.TimerCallback_SendSbcData, new object(), 0, Program.ModerateTimespan);            
+            Program.timer = new Timer(this.TimerCallback, new object(), 0, Program.ModerateTimespan);
+
+            this.network = new Network();
+            this.sendCounter = 0;
         }
 
-        private void TimerCallback_SendSbcData(object stateInfo)
+        private void TimerCallback(object stateInfo)
         {
-            Debug.Print("Send" + (this.sendCounter += 1));
+            try
+            {
+                // force garbage collection
+                // to learn about what needs to be static
+                Debug.GC(true);
+
+                this.sendCounter++;
+                this.FlashLed();
+                this.SendSbcData();
+            }
+            catch (Exception ex)
+            {
+                SdCard.WriteException(ex.Message);
+            }
+        }
+
+        private void SendSbcData()
+        {
             SbcData[] data = new SbcData[] 
                 {
                     new SbcData() 
@@ -55,6 +83,12 @@ namespace Algae.WcfCobraTestClient01
                     }
                 };
             this.network.Send(data);
+        }
+
+        private void FlashLed()
+        {
+            bool isOn = led1.Read();
+            this.led1.Write(!isOn);
         }
     }
 }
