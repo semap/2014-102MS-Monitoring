@@ -37,7 +37,7 @@ namespace Algae.WcfCobraTestClient01
             }
             catch (Exception ex)
             {
-                SdCard.WriteException(ex.Message);
+                SdCard.WriteException(ex);
             }
 
             Thread.Sleep(Timeout.Infinite);
@@ -65,7 +65,7 @@ namespace Algae.WcfCobraTestClient01
             }
             catch (Exception ex)
             {
-                SdCard.WriteException(ex.Message);
+                SdCard.WriteException(ex);
             }
         }
 

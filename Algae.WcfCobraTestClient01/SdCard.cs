@@ -17,7 +17,7 @@ namespace Algae.WcfCobraTestClient01
             storage.MountFileSystem();
         }
 
-        public static void WriteException(string message)
+        public static void WriteException(Exception exception)
         {
             // Assume one storage device is available, 
             // access it through NETMF
@@ -28,10 +28,8 @@ namespace Algae.WcfCobraTestClient01
             StringBuilder builder = new StringBuilder();
             builder.Append("DateTime:" + DateTime.Now.ToString());
             builder.Append("\n");
-            builder.AppendLine("Message:" + message);
-            builder.Append("\n");
-            builder.Append("--");
-
+            builder.Append(exception.ToString());
+           
             try
             {
                 // create a file
@@ -52,7 +50,7 @@ namespace Algae.WcfCobraTestClient01
             }
             catch(Exception ex)
             {
-                Debug.Print(ex.Message);
+                Debug.Print(ex.ToString());
             }
         }
     }
