@@ -2,72 +2,108 @@
 {
     using System;
     using System.Threading;
-    using GHI.Premium.Hardware.LowLevel;
+    using GhiHardwareLowLevel = GHI.Premium.Hardware.LowLevel;
+    using MsHardware = Microsoft.SPOT.Hardware;
 
     public class OtherProgram
     {
-        private static Timer timer;
-        private static int period = 1000;
-     
+        private int period = 1000;
+        private bool throwError = false;
+
         // LED
-        private static Microsoft.SPOT.Hardware.OutputPort led1 = 
+        private Microsoft.SPOT.Hardware.OutputPort led1 =
             new Microsoft.SPOT.Hardware.OutputPort(GHI.Hardware.G120.Pin.P1_15, true);
 
         // buttons
-        private static Microsoft.SPOT.Hardware.InterruptPort lrd1 =
+        private Microsoft.SPOT.Hardware.InterruptPort lrd1 =
             new Microsoft.SPOT.Hardware.InterruptPort(GHI.Hardware.G120.Pin.P0_22, true, Microsoft.SPOT.Hardware.Port.ResistorMode.PullUp, Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeLow);
 
-        private static Microsoft.SPOT.Hardware.InterruptPort lrd0 =
+        private Microsoft.SPOT.Hardware.InterruptPort lrd0 =
             new Microsoft.SPOT.Hardware.InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Microsoft.SPOT.Hardware.Port.ResistorMode.PullUp, Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeLow);
 
         public OtherProgram()
         {
-            lrd0.OnInterrupt += OnInterrupt_ThrowFatalError;
-            lrd1.OnInterrupt += OnInterrupt_ThrowFatalError;
-            timer = new Timer(new TimerCallback(TimerCallback), new object(), 0, period);
+            this.SetupButtons();
+            this.Loop();
         }
 
-        private static void OnInterrupt_ThrowFatalError(uint data1, uint data2, DateTime time)
+        private void SetupButtons()
         {
-            throw new OutOfMemoryException("What's up");        
+            this.lrd0.OnInterrupt += this.OnInterrupt_ThrowFatalError;
+            this.lrd1.OnInterrupt += this.OnInterrupt_ThrowFatalError;
         }
 
-        private void TimerCallback(object stateInfo)
+        private void OnInterrupt_ThrowFatalError(uint data1, uint data2, DateTime time)
         {
-            Flash();
+            this.throwError = true;
+        }
+
+        private void Loop()
+        {
+            while (true)
+            {
+                Thread.Sleep(this.period);
+                if (this.throwError)
+                {
+                    this.ThrowError();
+                }
+                else
+                {
+                    this.Flash();
+                }
+            }
+        }
+
+        private void ThrowError()
+        {
+            object o = null;
+            o.ToString();
         }
 
         private void Flash()
         {
-            bool isOn = led1.Read();
-            led1.Write(!isOn);
+            bool isOn = this.led1.Read();
+            this.led1.Write(!isOn);
         }
     }
 
     public class Program
     {
-        private const uint WatchdogTimeoutMs = 6000;
-        private static Timer timer;
-        private static int period = (int)WatchdogTimeoutMs - 1000;
-        
+        private const uint WatchdogTimeoutMs = 1000 * 3;
+        private static bool keepResettingWatchdog = true;
+        private static int watchdogResetMs = (int)WatchdogTimeoutMs - 1000;
+        private static Thread WatchdogReset;
+
         public static void Main()
         {
             // Enable Watchdog
-            Watchdog.Enable(WatchdogTimeoutMs);
+            GhiHardwareLowLevel.Watchdog.Enable(WatchdogTimeoutMs);
 
             // regularly reset the Watchdog
-            timer = new Timer(new TimerCallback(TimerCallback), new object(), 0, period);
+            WatchdogReset = new Thread(WatchdogResetLoop);
+            WatchdogReset.Start();
 
             // start program
-            OtherProgram p = new OtherProgram();
+            try
+            {
+                OtherProgram p = new OtherProgram();
+            }
+            catch (Exception)
+            {
+                keepResettingWatchdog = false;
+            }
 
             // prevent exiting
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void TimerCallback(object state)
+        private static void WatchdogResetLoop()
         {
-            Watchdog.ResetCounter();
+            while (keepResettingWatchdog)
+            {
+                Thread.Sleep(watchdogResetMs);
+                GhiHardwareLowLevel.Watchdog.ResetCounter();
+            }
         }
     }
 }
