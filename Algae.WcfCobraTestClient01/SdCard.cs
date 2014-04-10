@@ -34,7 +34,7 @@ namespace Algae.WcfCobraTestClient01
             {
                 // create a file
                 FileStream fileStream =
-                    new FileStream(rootDirectory + @"\event-" + DateTime.Now.Ticks.ToString() + @".txt", FileMode.CreateNew);
+                    new FileStream(rootDirectory + @"\exception-" + DateTime.Now.Ticks.ToString() + @".txt", FileMode.CreateNew);
 
                 // encode message
                 byte[] data = Encoding.UTF8.GetBytes(builder.ToString());
