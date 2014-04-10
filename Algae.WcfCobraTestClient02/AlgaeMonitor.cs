@@ -17,6 +17,8 @@ namespace Algae.WcfCobraTestClient02
 
         public void SendContinuousTestDataAcrossNetwork()
         {
+            // use a while loop with a sleep period
+            // until we figure out how to propagate Exceptions from Timers and Threads to the main thread.            
             while (true)
             {
                 Thread.Sleep(period);
