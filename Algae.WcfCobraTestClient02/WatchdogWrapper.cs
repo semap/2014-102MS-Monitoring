@@ -13,10 +13,9 @@ namespace Algae.WcfCobraTestClient02
         public static void Watch()
         {
             // enable Watchdog
-            // the Watchdog will reboot the Cobra if the timeout expires
             Watchdog.Enable(WatchdogTimeoutMs);
 
-            // regularly reset the Watchdog to prevent a reboot     
+            // regularly reset the Watchdog before the timeout expires
             watchdogReset = new Thread(WatchdogResetLoop);
             watchdogReset.Start();
         }
@@ -28,6 +27,8 @@ namespace Algae.WcfCobraTestClient02
 
         private static void WatchdogResetLoop()
         {
+            // the Watchdog will reboot the Cobra if the timeout expires
+            // so reset it to prevent reboot
             while (keepResettingWatchdog)
             {
                 Thread.Sleep(WatchdogResetMs);
