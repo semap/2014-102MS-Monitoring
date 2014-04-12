@@ -109,9 +109,10 @@ namespace Algae.WcfCobraTestClient02
                     IsConnectedResponse resp = this.Proxy.IsConnected(new IsConnected());
                     isConnected = resp.IsConnectedResult;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     isConnected = false;
+                    SdCard.WriteException(ex);
                 }
             }
         }
