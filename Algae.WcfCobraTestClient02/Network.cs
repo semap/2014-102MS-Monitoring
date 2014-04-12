@@ -21,23 +21,11 @@ namespace Algae.WcfCobraTestClient02
         private EthernetENC28J60 eth;
         private bool hasIpAddress = false;
 
-        // flash led
-        private OutputPort led1 = new OutputPort(GHI.Hardware.G120.Pin.P1_15, true);
-        private bool doFlashing = false;
-
-        // buttons
-        private InterruptPort lrd1 =
-            new InterruptPort(GHI.Hardware.G120.Pin.P0_22, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
-
-        private InterruptPort lrd0 =
-            new InterruptPort(GHI.Hardware.G120.Pin.P2_10, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
-
         // wcf proxy
         private IPersistenceSvcClientProxy proxy;
 
         public Network()
         {
-            this.SetupButtonPressEvents();
             this.InitializeFezCobraIIEthernetPort();
         }
 
@@ -63,47 +51,13 @@ namespace Algae.WcfCobraTestClient02
                 {
                     this.ConnectWcfProxy();
                     this.SendDataToWcfServiceViaHttp(data);
-                    this.FlashLed();
                 }
                 catch (Exception ex)
                 {
-                    this.HandleException(ex);
+                    SdCard.WriteException(ex);
                 }
             }
         }
-
-        #region Button Press Events for Testing
-
-        private void FlashLed()
-        {
-            if (this.doFlashing)
-            {
-                bool isOn = this.led1.Read();
-                this.led1.Write(!isOn);
-            }
-            else
-            {
-                this.led1.Write(false);
-            }
-        }
-
-        private void DoFlashing(uint data1, uint data2, DateTime time)
-        {
-            this.doFlashing = true;
-        }
-
-        private void DoNotDoFlashing(uint data1, uint data2, DateTime time)
-        {
-            this.doFlashing = false;
-        }
-
-        private void SetupButtonPressEvents()
-        {
-            this.lrd0.OnInterrupt += this.DoFlashing;
-            this.lrd1.OnInterrupt += this.DoNotDoFlashing;
-        }
-
-        #endregion
 
         private void InitializeFezCobraIIEthernetPort()
         {
@@ -204,10 +158,5 @@ namespace Algae.WcfCobraTestClient02
         }
 
         #endregion
-
-        private void HandleException(Exception ex)
-        {
-            Debug.Print(ex.Message);
-        }
     }
 }

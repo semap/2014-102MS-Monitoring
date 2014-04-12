@@ -1,4 +1,4 @@
-﻿#define UseTestClass
+﻿////#define UseTestClass
 
 namespace Algae.WcfCobraTestClient02
 {

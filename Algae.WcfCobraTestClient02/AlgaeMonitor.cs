@@ -22,8 +22,8 @@ namespace Algae.WcfCobraTestClient02
             while (true)
             {
                 Thread.Sleep(period);
-                ////SbcData data = this.CreateSbcTestData();
-                ////SbcData[] dataArray = new SbcData[] { data };
+                SbcData data = this.CreateSbcTestData();
+                SbcData[] dataArray = new SbcData[] { data };
                 ////this.network.Send(dataArray);
                 SendComplete();
             }
