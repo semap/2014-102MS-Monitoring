@@ -39,19 +39,13 @@ namespace Algae.WcfCobraTestClient02
                 Thread.Sleep(this.period);
                 if (this.throwError)
                 {
-                    this.ThrowError();
+                    throw new Exception("Manual Exception");
                 }
                 else
                 {
                     Flasher.Flash();
                 }
             }
-        }
-
-        private void ThrowError()
-        {
-            object o = null;
-            o.ToString();
         }
     }
 }

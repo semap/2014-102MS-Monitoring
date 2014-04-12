@@ -6,7 +6,7 @@ namespace Algae.WcfCobraTestClient02
     public static class WatchdogWrapper
     {
         private const uint WatchdogTimeoutMs = 1000 * 10;
-        private const int WatchdogResetMs = (int)WatchdogTimeoutMs - 1000;
+        private const int WatchdogResetMs = 1000;
         private static bool keepResettingWatchdog = true;
         private static Thread watchdogReset;
 
