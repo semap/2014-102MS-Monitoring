@@ -3,18 +3,21 @@ namespace Algae.WcfCobraTestClient02
     using System;
     using System.IO;
     using System.Text;
+    using System.Threading;
+    using GHI.Hardware.G120;
     using GHI.Premium.IO;
     using Microsoft.SPOT;
+    using Microsoft.SPOT.Hardware;
     using Microsoft.SPOT.IO;
-    
+
     public static class SdCard
     {
-        private static PersistentStorage storage;
+        private static InputPort sdDetectPin;
 
         static SdCard()
-        {
-            storage = new PersistentStorage("SD");
-            storage.MountFileSystem();
+        {                                 
+            sdDetectPin = new InputPort(Pin.P1_8, false, Port.ResistorMode.PullUp);
+            new Thread(SDMountThread).Start();
         }
 
         public static void WriteException(Exception exception)
@@ -24,16 +27,15 @@ namespace Algae.WcfCobraTestClient02
                 return;
             }
 
-            if (VolumeInfo.GetVolumes().Length == 0)
+            // get volume info
+            VolumeInfo volumeInfo;
+            if (TryGetVolumeInfo(out volumeInfo) == false)
             {
                 return;
             }
 
-            // Assume one storage device is available, 
-            // access it through NETMF
-            VolumeInfo volumeInfo = VolumeInfo.GetVolumes()[0];
+            // get root directory
             string rootDirectory = volumeInfo.RootDirectory;
-
             if (rootDirectory == null)
             {
                 return;
@@ -64,8 +66,78 @@ namespace Algae.WcfCobraTestClient02
                 fileStream.Close();
             }
             catch (Exception ex)
+            {                
+                // we cannot log the error to the SdCard
+                // so just print it to the console
+                Debug.Print(ex.ToString());
+            }
+        }
+
+        private static bool TryGetVolumeInfo(out VolumeInfo volumeInfo)
+        {
+            volumeInfo = null;
+            if (VolumeInfo.GetVolumes().Length == 0)
             {
-                Debug.Print(ex.ToString());                
+                return false;
+            }
+            foreach (var vi in VolumeInfo.GetVolumes())
+            {
+                if (vi.Name.Equals("SD"))
+                {
+                    volumeInfo = vi;
+                    break;
+                }
+            }
+            if (volumeInfo == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void SDMountThread()
+        {
+            PersistentStorage sdPS = null;
+            const int POLL_TIME = 500; // check every 500 millisecond
+
+            bool sdExists;
+            while (true)
+            {
+                try // If SD card was removed while mounting, it may throw exceptions
+                {
+                    sdExists = sdDetectPin.Read() == false;
+
+                    // make sure it is fully inserted and stable
+                    if (sdExists)
+                    {
+                        Thread.Sleep(50);
+                        sdExists = sdDetectPin.Read() == false;
+                    }
+
+                    if (sdExists && sdPS == null)
+                    {
+                        // mount the sd card
+                        sdPS = new PersistentStorage("SD");
+                        sdPS.MountFileSystem();
+                    }
+                    else if (!sdExists && sdPS != null)
+                    {
+                        // unmount
+                        sdPS.UnmountFileSystem();
+                        sdPS.Dispose();
+                        sdPS = null;
+                    }
+                }
+                catch
+                {
+                    if (sdPS != null)
+                    {
+                        sdPS.Dispose();
+                        sdPS = null;
+                    }
+                }
+
+                Thread.Sleep(POLL_TIME);
             }
         }
     }

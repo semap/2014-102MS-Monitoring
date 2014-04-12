@@ -1,4 +1,5 @@
 ﻿////#define UseTestClass
+#define UseWatchdog
 
 namespace Algae.WcfCobraTestClient02
 {
@@ -8,7 +9,9 @@ namespace Algae.WcfCobraTestClient02
     {
         public static void Main()
         {
+#if UseWatchdog
             WatchdogWrapper.Watch();
+#endif
 
             // put any code that we want to watch in the try block
             // this mimics global error handling
@@ -25,7 +28,9 @@ namespace Algae.WcfCobraTestClient02
             {
                 // reboot on unhandle exceptions
                 SdCard.WriteException(ex);
+#if UseWatchdog
                 WatchdogWrapper.ForceReboot();
+#endif
             }
         }
     }
