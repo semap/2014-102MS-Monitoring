@@ -15,7 +15,7 @@ namespace Algae.WcfCobraTestClient02
         private static InputPort sdDetectPin;
 
         static SdCard()
-        {                                 
+        {
             sdDetectPin = new InputPort(Pin.P1_8, false, Port.ResistorMode.PullUp);
             new Thread(SDMountThread).Start();
         }
@@ -41,12 +41,28 @@ namespace Algae.WcfCobraTestClient02
                 return;
             }
 
-            // format the message
+            // create the message
             StringBuilder builder = new StringBuilder();
+
             builder.Append("DateTime:" + DateTime.Now.ToString());
             builder.Append("\n");
-            builder.Append(exception.ToString());
 
+            builder.Append("Message:" + exception.Message);
+            builder.Append("\n");
+
+            builder.Append("StackTrace:" + exception.StackTrace);
+            builder.Append("\n");
+
+            Exception innerException = exception.InnerException;
+            while (innerException != null)
+            {
+                builder.Append("InnerException-Message:" + innerException.Message);
+                builder.Append("\n");
+
+                innerException = innerException.InnerException;
+            }
+
+            // write the message to the SD Card.
             try
             {
                 // create a file
@@ -66,7 +82,7 @@ namespace Algae.WcfCobraTestClient02
                 fileStream.Close();
             }
             catch (Exception ex)
-            {                
+            {
                 // we cannot log the error to the SdCard
                 // so just print it to the console
                 Debug.Print(ex.ToString());

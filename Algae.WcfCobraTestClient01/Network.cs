@@ -168,7 +168,7 @@ namespace Algae.WcfCobraTestClient01
             {
                 // this garbage collecting is just for testing object lifetime
                 // it probably slows things down to do it every loop
-#if DEBUG
+#if ManuallyCollectGarbage
                 Debug.GC(true);
                 GC.WaitForPendingFinalizers();
 #endif

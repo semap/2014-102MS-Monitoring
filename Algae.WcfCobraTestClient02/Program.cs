@@ -1,4 +1,5 @@
 ﻿////#define UseTestClass
+////#define ManuallyCollectGarbage
 #define UseWatchdog
 
 namespace Algae.WcfCobraTestClient02
