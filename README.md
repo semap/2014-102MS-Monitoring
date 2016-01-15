@@ -40,6 +40,18 @@
 
 ## Deploy to the Fez Cobra II Net
 
+### Refresh the Fez Cobra II
+
+This step is necessary if you want to delete all existing software except NETMF.
+
+1. Plug in the Fez Cobra II into the PC via USB. 
+1. Run Fez Config on your PC. 
+1. Ensure the device is connected to Fez Config.
+1. Choose Advanced > Loader (Tiny Booter) Update > Fez Cobra II
+1. Follow the instructions to wipe the device.
+
+### Deploy the Softare
+
 1. Plug the Cobra II into the PC via USB.
 1. Plug the Cobra II into the LAN via Ethernet.
 1. Right click on Algae.WcfCobraTestClient01 > Deploy
