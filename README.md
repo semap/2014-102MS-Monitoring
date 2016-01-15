@@ -58,3 +58,9 @@ This step is necessary if you want to delete all existing software except NETMF.
 1. The NETMF project will deploy.
 1. Restart the Cobra II.
 1. The Cobra II will send data to the WCF Service every one second.
+
+## Resoureces
+
+* GHI Guide to installing NETMF. https://www.ghielectronics.com/support/netmf
+* GHI NETMF Beginner's Guide. https://www.ghielectronics.com/downloads/NETMF/NETMF_for_Beginners.pdf
+* Device Profile for Web Services for NETMF. https://msdn.microsoft.com/en-us/library/dd170125.aspx
