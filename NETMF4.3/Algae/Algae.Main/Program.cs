@@ -1,4 +1,5 @@
 using System;
+using Algae.Hardware.G120.Ethernet;
 using Microsoft.SPOT;
 
 namespace Algae.Main
@@ -7,11 +8,9 @@ namespace Algae.Main
     {
         public static void Main()
         {
-            Debug.Print("Program started.");
+            var network = new NetworkInterface();
 
-
-
-            Debug.Print("Program finished.");
+            Debug.Print("Yo. This is the end");
         }
     }
 }
