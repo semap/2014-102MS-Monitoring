@@ -33,6 +33,8 @@
     <Compile Include="MyApplication.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MFDpwsDevice" />
+    <Reference Include="MFWsStack" />
     <Reference Include="Microsoft.SPOT.Native" />
   </ItemGroup>
   <ItemGroup>
