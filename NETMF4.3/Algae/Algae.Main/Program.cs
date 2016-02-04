@@ -1,6 +1,5 @@
-using System;
-using Algae.Hardware.G120.Ethernet;
-using Microsoft.SPOT;
+using Algae.Core;
+using Sample.Application;
 
 namespace Algae.Main
 {
@@ -8,9 +7,7 @@ namespace Algae.Main
     {
         public static void Main()
         {
-            var network = new NetworkInterface();
-
-            Debug.Print("Yo. This is the end");
+            var application = new MyApplication(new HardwareCapacityTester());
         }
     }
 }

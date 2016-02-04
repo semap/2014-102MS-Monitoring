@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<l:definitions xmlns:s12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:p="http://schemas.xmlsoap.org/ws/2006/02/devprof" xmlns:po="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:e="http://schemas.xmlsoap.org/ws/2004/08/eventing" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://Algae.Dpws.FooService" name="FooService" targetNamespace="http://Algae.Dpws.FooService" xmlns:l="http://schemas.xmlsoap.org/wsdl/">
+  <l:types>
+    <xs:schema targetNamespace="http://Algae.Dpws.FooService" xmlns:xs="http://www.w3.org/2001/XMLSchema" />
+  </l:types>
+  <l:message name="StartOut">
+    <l:part name="parameters" element="tns:StartResponse" />
+  </l:message>
+  <l:portType name="FooService">
+    <l:operation name="Start">
+      <l:input a:Action="http://algae.dpws.fooservice/FooService/Start" message="tns:StartIn" />
+      <l:output a:Action="http://algae.dpws.fooservice/FooService/StartResponse" message="tns:StartOut" />
+    </l:operation>
+  </l:portType>
+  <l:binding name="FooServiceBinding" type="tns:FooService">
+    <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" />
+    <po:PolicyReference URI="#FooServicePolicy" l:required="true" />
+    <l:operation name="Start">
+      <wsoap12:operation xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" />
+      <l:input>
+        <wsoap12:body use="literal" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" />
+      </l:input>
+      <l:output>
+        <wsoap12:body use="literal" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" />
+      </l:output>
+    </l:operation>
+  </l:binding>
+</l:definitions>
+

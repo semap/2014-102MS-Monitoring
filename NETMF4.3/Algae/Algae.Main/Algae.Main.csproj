@@ -33,12 +33,20 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Algae.Hardware.G120.Ethernet\Algae.Hardware.G120.Ethernet.csproj">
-      <Project>{99326CBB-660F-44A0-9EEC-06183B70A95E}</Project>
-      <Name>Algae.Hardware.G120.Ethernet</Name>
+    <ProjectReference Include="..\Algae.Abstractions\Algae.Abstractions.csproj">
+      <Project>{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}</Project>
+      <Name>Algae.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algae.Core\Algae.Core.csproj">
+      <Project>{512E930F-CF8D-4DD6-836D-6A5E311669B0}</Project>
+      <Name>Algae.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sample.Application\Sample.Application.csproj">
+      <Project>{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}</Project>
+      <Name>Sample.Application</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

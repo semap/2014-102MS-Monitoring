@@ -11,11 +11,11 @@ namespace Algae.Hardware.G120.Ethernet
      * https://www.ghielectronics.com/docs/30/networking#3123
      * https://www.ghielectronics.com/docs/318/fez-cobra-ii-developers-guide
      */
-    public class NetworkInterface
+    public class SbcNetwork
     {
         private EthernetENC28J60 Ethernet;
 
-        public NetworkInterface()
+        public SbcNetwork()
         {
             InitializeFezCobraIIEthernetPort();
         }

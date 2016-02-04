@@ -3,13 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Dpws.Service", "Algae.Dpws.Service\Algae.Dpws.Service.csproj", "{02E7DC34-8AF4-42FF-A0F8-D291E4981487}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Dpws.Client", "Algae.Dpws.Client\Algae.Dpws.Client.csproj", "{4F8FD2EA-8A2F-4DD5-A823-88086298DB04}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Hardware.G120.Ethernet", "Algae.Hardware.G120.Ethernet\Algae.Hardware.G120.Ethernet.csproj", "{99326CBB-660F-44A0-9EEC-06183B70A95E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Main", "Algae.Main\Algae.Main.csproj", "{0236C110-6014-448D-A716-2F06F698279C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C9EF41B2-F3E8-4A72-BADC-E09CBF8C4C7E}"
+	ProjectSection(SolutionItems) = preProject
+		HowTo-Configure-basic-DPWS.md = HowTo-Configure-basic-DPWS.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Hardware.Emulator.Ethernet", "Algae.Hardware.Emulator.Ethernet\Algae.Hardware.Emulator.Ethernet.csproj", "{56A4CAAA-1097-4979-AC72-76581C7B49D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Application", "Sample.Application\Sample.Application.csproj", "{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Abstractions", "Algae.Abstractions\Algae.Abstractions.csproj", "{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Core", "Algae.Core\Algae.Core.csproj", "{512E930F-CF8D-4DD6-836D-6A5E311669B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Dpws.Service", "Sample.Dpws.Service\Sample.Dpws.Service.csproj", "{7B62400E-923F-4C89-9C92-DE9D4BC539C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{02E7DC34-8AF4-42FF-A0F8-D291E4981487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02E7DC34-8AF4-42FF-A0F8-D291E4981487}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02E7DC34-8AF4-42FF-A0F8-D291E4981487}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02E7DC34-8AF4-42FF-A0F8-D291E4981487}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F8FD2EA-8A2F-4DD5-A823-88086298DB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F8FD2EA-8A2F-4DD5-A823-88086298DB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F8FD2EA-8A2F-4DD5-A823-88086298DB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F8FD2EA-8A2F-4DD5-A823-88086298DB04}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99326CBB-660F-44A0-9EEC-06183B70A95E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{99326CBB-660F-44A0-9EEC-06183B70A95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99326CBB-660F-44A0-9EEC-06183B70A95E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +38,26 @@ Global
 		{0236C110-6014-448D-A716-2F06F698279C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0236C110-6014-448D-A716-2F06F698279C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0236C110-6014-448D-A716-2F06F698279C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{56A4CAAA-1097-4979-AC72-76581C7B49D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A4CAAA-1097-4979-AC72-76581C7B49D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A4CAAA-1097-4979-AC72-76581C7B49D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A4CAAA-1097-4979-AC72-76581C7B49D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
