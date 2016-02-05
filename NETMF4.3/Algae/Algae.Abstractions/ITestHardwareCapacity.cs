@@ -7,8 +7,12 @@ namespace Algae.Abstractions
     {
         bool TestWanHttp();
 
-        bool TestDhcp();
+        bool TestWanPing();
 
         bool TestLanHttp();
+
+        bool TestLanPing();
+
+        bool TestDhcp();
     }
 }

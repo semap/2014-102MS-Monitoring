@@ -30,6 +30,11 @@ namespace Algae.Core
             return result;
         }
 
+        public bool TestWanPing()
+        {
+            return true;
+        }
+
         public bool TestLanHttp()
         {
             var result = false;
@@ -55,6 +60,11 @@ namespace Algae.Core
             }
 
             return result;
+        }
+
+        public bool TestLanPing()
+        {
+            return true;
         }
 
         public bool TestDhcp()

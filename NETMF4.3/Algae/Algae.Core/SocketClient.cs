@@ -12,20 +12,20 @@ namespace Algae.Core
         /// <summary>
         /// Issues a request for the root document on the specified server.
         /// </summary>
-        /// <param name="URL"></param>
+        /// <param name="url"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public static String GetWebPage(String URL, Int32 port)
+        public static String GetWebPage(String url, Int32 port)
         {
-            const Int32 c_microsecondsPerSecond = 1000000;
-            string host = GetHostFromURL(URL);
+            const Int32 MicrosecondsPerSecond = 1000000;
+            string host = GetHostFromURL(url);
             string server = host;
 
             // Create a socket connection to the specified server and port.
             using (Socket serverSocket = ConnectSocket(server, port))
             {
                 // Send request to the server.
-                String request = "GET " + URL + " HTTP/1.1\r\nHost: " + host +
+                String request = "GET " + url + " HTTP/1.1\r\nHost: " + host +
                     "\r\nConnection: Close\r\n\r\n";
 
                 Byte[] bytesToSend = Encoding.UTF8.GetBytes(request);
@@ -47,7 +47,7 @@ namespace Algae.Core
 
                 // Poll for data until 30-second timeout. Returns true for data and 
                 // connection closed.
-                while (serverSocket.Poll(30 * c_microsecondsPerSecond,
+                while (serverSocket.Poll(30 * MicrosecondsPerSecond,
                     SelectMode.SelectRead))
                 {
                     // If there are 0 bytes in the buffer, then the connection is 
@@ -64,8 +64,7 @@ namespace Algae.Core
                     // Append the chunk to the string.
                     page = page + new String(Encoding.UTF8.GetChars(buffer));
                 }
-
-                // Return the complete string.
+                
                 return page;
             }
         }
@@ -83,8 +82,11 @@ namespace Algae.Core
             IPHostEntry hostEntry = Dns.GetHostEntry(server);
 
             // Create socket and connect to the server's IP address and port
-            Socket socket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp);
+            Socket socket = new Socket(
+                AddressFamily.InterNetwork,
+                SocketType.Stream, 
+                ProtocolType.Tcp);
+
             socket.Connect(new IPEndPoint(hostEntry.AddressList[0], port));
             return socket;
         }
@@ -92,31 +94,37 @@ namespace Algae.Core
         /// <summary>
         /// Extracts the host string from the URL.
         /// </summary>
-        /// <param name="URL">The complete URL to parse.</param>
-        /// <returns>The host string.  For example: example.com/example</returns>
-        private static String GetHostFromURL(string URL)
+        /// <param name="url">The complete URL to parse.</param>
+        /// <returns>The host string.</returns>
+        private static String GetHostFromURL(string url)
         {
             // Figure out host
-            int start = URL.IndexOf("://");
-            int end = start >= 0 ? URL.IndexOf('/', start + 3) : URL.IndexOf('/');
+            int start = url.IndexOf("://");
+            int end = start >= 0 ? url.IndexOf('/', start + 3) : url.IndexOf('/');
+
             if (start >= 0)
             {
                 // move start after ://
                 start += 3;
 
                 if (end >= 0)
+                {
                     // http://example.com/example
-                    return URL.Substring(start, end - start);
-
+                    return url.Substring(start, end - start);
+                }
                 else
+                {
                     // http://example.com
-                    return URL.Substring(start);
+                    return url.Substring(start);
+                }
             }
             if (end >= 0)
+            {
                 // example.com/example
-                return URL.Substring(0, end + 1);
-            return URL;
+                return url.Substring(0, end + 1);
+            }
+
+            return url;
         }
     }
-
 }

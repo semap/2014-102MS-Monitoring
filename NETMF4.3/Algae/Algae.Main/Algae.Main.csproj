@@ -48,10 +48,6 @@
       <Project>{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}</Project>
       <Name>Sample.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sample.Dpws.Service\Sample.Dpws.Service.csproj">
-      <Project>{7B62400E-923F-4C89-9C92-DE9D4BC539C2}</Project>
-      <Name>Sample.Dpws.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <Import Condition="!EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

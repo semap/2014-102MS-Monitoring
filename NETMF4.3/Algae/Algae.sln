@@ -20,11 +20,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Abstractions", "Algae
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Core", "Algae.Core\Algae.Core.csproj", "{512E930F-CF8D-4DD6-836D-6A5E311669B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Dpws.Service", "Sample.Dpws.Service\Sample.Dpws.Service.csproj", "{7B62400E-923F-4C89-9C92-DE9D4BC539C2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ResearchAndSamples", "ResearchAndSamples", "{383A11FC-8398-4D53-9417-25EC644A1C18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ping", "Ping\Ping.csproj", "{5C8DB099-4910-460F-9353-5BC8CDBD66AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "HttpClient\HttpClient.csproj", "{1D7EC53F-350A-4FCE-81EF-3E5951926D15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingClient", "PingClient\PingClient.csproj", "{5C8DB099-4910-460F-9353-5BC8CDBD66AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +58,12 @@ Global
 		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{512E930F-CF8D-4DD6-836D-6A5E311669B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -73,6 +75,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{1D7EC53F-350A-4FCE-81EF-3E5951926D15} = {383A11FC-8398-4D53-9417-25EC644A1C18}
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF} = {383A11FC-8398-4D53-9417-25EC644A1C18}
 	EndGlobalSection
 EndGlobal
