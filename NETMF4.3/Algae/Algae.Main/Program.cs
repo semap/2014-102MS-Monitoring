@@ -9,8 +9,7 @@ namespace Algae.Main
         public static void Main()
         {
             var application = new MyApplication(
-                new HardwareCapacityTester(),
-                new MyServiceImplementation());
+                new HardwareCapacityTester());
         }
     }
 }

@@ -5,6 +5,10 @@ namespace Algae.Abstractions
 {
     public interface ITestHardwareCapacity
     {
-        bool TestHttp();
+        bool TestWanHttp();
+
+        bool TestDhcp();
+
+        bool TestLanHttp();
     }
 }

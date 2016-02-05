@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Core", "Algae.Core\Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Dpws.Service", "Sample.Dpws.Service\Sample.Dpws.Service.csproj", "{7B62400E-923F-4C89-9C92-DE9D4BC539C2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ResearchAndSamples", "ResearchAndSamples", "{383A11FC-8398-4D53-9417-25EC644A1C18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ping", "Ping\Ping.csproj", "{5C8DB099-4910-460F-9353-5BC8CDBD66AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,8 +62,17 @@ Global
 		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B62400E-923F-4C89-9C92-DE9D4BC539C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C8DB099-4910-460F-9353-5BC8CDBD66AF} = {383A11FC-8398-4D53-9417-25EC644A1C18}
 	EndGlobalSection
 EndGlobal
