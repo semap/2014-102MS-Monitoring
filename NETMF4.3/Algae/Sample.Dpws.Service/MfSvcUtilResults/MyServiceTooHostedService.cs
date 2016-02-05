@@ -21,7 +21,7 @@ using Ws.Services.Xml;
 using Ws.Services.Binding;
 using Ws.Services.Soap;
 
-namespace schemas.singularbiogentics.com
+namespace Algae.Schemas.MyServiceToo
 {
     
     
@@ -37,57 +37,17 @@ namespace schemas.singularbiogentics.com
             m_service = service;
 
             // Set base service properties
-            ServiceNamespace = new WsXmlNamespace("mys", "http://schemas.singularbiogentics.com/");
-            ServiceID = "urn:uuid:0790b281-9957-4767-90ce-b3ad4d9fa6e7";
+            ServiceNamespace = new WsXmlNamespace("mys", "http://Algae.Schemas/MyServiceToo");
+            ServiceID = "urn:uuid:1a9790d9-230f-4b5d-b74f-ba217497b989";
             ServiceTypeName = "MyServiceToo";
 
             // Add service types here
-            ServiceOperations.Add(new WsServiceOperation("http://schemas.singularbiogentics.com/IMyServiceToo", "Start"));
+            ServiceOperations.Add(new WsServiceOperation("http://algae.schemas/MyServiceToo/IMyServiceToo", "Start"));
 
             // Add event sources here
         }
         
         public MyServiceToo(IMyServiceToo service) : 
-                this(service, new ProtocolVersion10())
-        {
-        }
-        
-        public virtual WsMessage Start(WsMessage request)
-        {
-            request.Reader.Dispose();
-            request.Reader = null;
-
-            // Call service operation to process request.
-            m_service.Start();
-
-            // Return a OneWayResponse message for oneway messages
-            return WsMessage.CreateOneWayResponse();
-        }
-    }
-    
-    public class MyService : DpwsHostedService
-    {
-        
-        private IMyService m_service;
-        
-        public MyService(IMyService service, ProtocolVersion version) : 
-                base(version)
-        {
-            // Set the service implementation properties
-            m_service = service;
-
-            // Set base service properties
-            ServiceNamespace = new WsXmlNamespace("mys", "http://schemas.singularbiogentics.com/");
-            ServiceID = "urn:uuid:e0ec7e7b-2b63-456d-9fae-2a05ba36cfa0";
-            ServiceTypeName = "MyService";
-
-            // Add service types here
-            ServiceOperations.Add(new WsServiceOperation("http://schemas.singularbiogentics.com/IMyService", "Start"));
-
-            // Add event sources here
-        }
-        
-        public MyService(IMyService service) : 
                 this(service, new ProtocolVersion10())
         {
         }

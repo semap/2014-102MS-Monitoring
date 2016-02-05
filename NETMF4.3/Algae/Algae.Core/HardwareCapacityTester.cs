@@ -17,7 +17,6 @@ namespace Algae.Core
             }
             catch (Exception ex)
             {
-                Debug.Print("Exception");
                 Debug.Print(ex.ToString());
             }
 

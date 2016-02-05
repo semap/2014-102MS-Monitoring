@@ -1,4 +1,5 @@
 using Algae.Core;
+
 using Sample.Application;
 
 namespace Algae.Main
@@ -7,7 +8,9 @@ namespace Algae.Main
     {
         public static void Main()
         {
-            var application = new MyApplication(new HardwareCapacityTester());
+            var application = new MyApplication(
+                new HardwareCapacityTester(),
+                new MyServiceImplementation());
         }
     }
 }

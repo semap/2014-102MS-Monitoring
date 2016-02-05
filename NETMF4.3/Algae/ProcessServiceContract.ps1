@@ -1,4 +1,5 @@
-﻿
+﻿Clear-Host
+
 # To run do `.\ProcessServiceContract.ps1`
 
 $library = "C:\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\le";
@@ -11,10 +12,11 @@ $destinationDir = ".\MfSvcUtilResults";
 
 # Setup Directories
 cd $svcProjectDir;
+
 New-Item -ItemType Directory $destinationDir -Force
 
 # Create WSDL File
-mfsvcutil $svcAssembly /R:$library /D:$destinationDir 
+mfsvcutil $svcAssemblyDir /R:$library /D:$destinationDir 
 
 # Generate Code from WSDL File
 

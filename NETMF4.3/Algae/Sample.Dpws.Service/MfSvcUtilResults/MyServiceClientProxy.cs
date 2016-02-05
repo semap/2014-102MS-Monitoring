@@ -22,7 +22,7 @@ using Ws.Services.Soap;
 using Ws.Services.WsaAddressing;
 using Ws.Services.Xml;
 
-namespace schemas.singularbiogentics.com
+namespace Algae.Schemas.MyService
 {
     
     
@@ -44,7 +44,7 @@ namespace schemas.singularbiogentics.com
 
             // Create request header
             String action;
-            action = "http://schemas.singularbiogentics.com/IMyService/Start";
+            action = "http://algae.schemas/MyService/IMyService/Start";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, null, WsPrefix.None);

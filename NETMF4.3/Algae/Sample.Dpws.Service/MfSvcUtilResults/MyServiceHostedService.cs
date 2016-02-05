@@ -21,7 +21,7 @@ using Ws.Services.Xml;
 using Ws.Services.Binding;
 using Ws.Services.Soap;
 
-namespace schemas.singularbiogentics.com
+namespace Algae.Schemas.MyService
 {
     
     
@@ -37,12 +37,12 @@ namespace schemas.singularbiogentics.com
             m_service = service;
 
             // Set base service properties
-            ServiceNamespace = new WsXmlNamespace("mys", "http://schemas.singularbiogentics.com/");
-            ServiceID = "urn:uuid:f612a76f-e207-4400-a594-b2ee3e7491bc";
+            ServiceNamespace = new WsXmlNamespace("mys", "http://Algae.Schemas/MyService");
+            ServiceID = "urn:uuid:3feb3507-0c09-4954-b4c4-e158357455cf";
             ServiceTypeName = "MyService";
 
             // Add service types here
-            ServiceOperations.Add(new WsServiceOperation("http://schemas.singularbiogentics.com/IMyService", "Start"));
+            ServiceOperations.Add(new WsServiceOperation("http://algae.schemas/MyService/IMyService", "Start"));
 
             // Add event sources here
         }

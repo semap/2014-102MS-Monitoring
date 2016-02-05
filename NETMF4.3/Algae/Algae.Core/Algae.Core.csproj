@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MyServiceImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HardwareCapacityTester.cs" />
     <Compile Include="SocketClient.cs" />
@@ -41,6 +42,10 @@
     <ProjectReference Include="..\Algae.Abstractions\Algae.Abstractions.csproj">
       <Project>{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}</Project>
       <Name>Algae.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sample.Dpws.Service\Sample.Dpws.Service.csproj">
+      <Project>{7B62400E-923F-4C89-9C92-DE9D4BC539C2}</Project>
+      <Name>Sample.Dpws.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

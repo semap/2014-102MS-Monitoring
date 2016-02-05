@@ -22,7 +22,7 @@ using Ws.Services.Soap;
 using Ws.Services.WsaAddressing;
 using Ws.Services.Xml;
 
-namespace schemas.singularbiogentics.com
+namespace Algae.Schemas.MyServiceToo
 {
     
     
@@ -44,39 +44,7 @@ namespace schemas.singularbiogentics.com
 
             // Create request header
             String action;
-            action = "http://schemas.singularbiogentics.com/IMyServiceToo/Start";
-            WsWsaHeader header;
-            header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
-            WsMessage request = new WsMessage(header, null, WsPrefix.None);
-            request.Method = "Start";
-
-
-            // Send service request
-            m_requestChannel.Open();
-            m_requestChannel.RequestOneWay(request);
-            m_requestChannel.Close();
-        }
-    }
-    
-    public class MyServiceClientProxy : DpwsClient
-    {
-        
-        private IRequestChannel m_requestChannel = null;
-        
-        public MyServiceClientProxy(Binding binding, ProtocolVersion version) : 
-                base(binding, version)
-        {
-
-            // Set client endpoint address
-            m_requestChannel = m_localBinding.CreateClientChannel(new ClientBindingContext(m_version));
-        }
-        
-        public virtual void Start()
-        {
-
-            // Create request header
-            String action;
-            action = "http://schemas.singularbiogentics.com/IMyService/Start";
+            action = "http://algae.schemas/MyServiceToo/IMyServiceToo/Start";
             WsWsaHeader header;
             header = new WsWsaHeader(action, null, EndpointAddress, m_version.AnonymousUri, null, null);
             WsMessage request = new WsMessage(header, null, WsPrefix.None);

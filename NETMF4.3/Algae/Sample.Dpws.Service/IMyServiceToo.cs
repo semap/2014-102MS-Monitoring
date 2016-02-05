@@ -2,7 +2,7 @@ using Ws.ServiceModel;
 
 namespace Sample.Dpws.Service
 {
-    [ServiceContract(Name = "MyServiceToo", Namespace = "http://schemas.singularbiogentics.com/")]
+    [ServiceContract(Name = "MyServiceToo", Namespace = "http://Algae.Schemas")]
     public interface IMyServiceToo
     {
         [OperationContract(Name = "Start", IsOneWay = true)]

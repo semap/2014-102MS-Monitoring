@@ -21,23 +21,15 @@ using XmlElement = Ws.Services.Xml.WsXmlNode;
 using XmlAttribute = Ws.Services.Xml.WsXmlAttribute;
 using XmlConvert = Ws.Services.Serialization.WsXmlConvert;
 
-namespace schemas.singularbiogentics.com
+namespace Algae.Schemas.MyServiceToo
 {
     
     
-    [ServiceContract(Namespace="http://schemas.singularbiogentics.com/")]
+    [ServiceContract(Namespace="http://Algae.Schemas/MyServiceToo")]
     public interface IMyServiceToo
     {
         
-        [OperationContract(Action="http://schemas.singularbiogentics.com/IMyServiceToo/Start", IsOneWay=true)]
-        void Start();
-    }
-    
-    [ServiceContract(Namespace="http://schemas.singularbiogentics.com/")]
-    public interface IMyService
-    {
-        
-        [OperationContract(Action="http://schemas.singularbiogentics.com/IMyService/Start", IsOneWay=true)]
+        [OperationContract(Action="http://algae.schemas/MyServiceToo/IMyServiceToo/Start", IsOneWay=true)]
         void Start();
     }
 }
