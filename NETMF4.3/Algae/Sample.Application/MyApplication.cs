@@ -21,8 +21,8 @@ namespace Sample.Application
             Debug.EnableGCMessages(false);
 
             hardwareCapacityTester.TestDhcp();
-            hardwareCapacityTester.TestWanHttp("http://www.bigfont.ca");
-            // hardwareCapacityTester.TestLanHttp(); // this one tends to fail :(
+            hardwareCapacityTester.TestWanHttp("bigfont.ca");
+            hardwareCapacityTester.TestLanHttp("192.168.1.148");
         }
     }
 }

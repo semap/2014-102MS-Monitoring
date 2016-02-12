@@ -1,5 +1,4 @@
 using Algae.Core;
-
 using Sample.Application;
 
 namespace Algae.Main
