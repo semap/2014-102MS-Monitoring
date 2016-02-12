@@ -8,9 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Main", "Algae.Main\Algae.Main.csproj", "{0236C110-6014-448D-A716-2F06F698279C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C9EF41B2-F3E8-4A72-BADC-E09CBF8C4C7E}"
-	ProjectSection(SolutionItems) = preProject
-		HowTo-Configure-basic-DPWS.md = HowTo-Configure-basic-DPWS.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algae.Hardware.Emulator.Ethernet", "Algae.Hardware.Emulator.Ethernet\Algae.Hardware.Emulator.Ethernet.csproj", "{56A4CAAA-1097-4979-AC72-76581C7B49D9}"
 EndProject

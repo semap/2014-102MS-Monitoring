@@ -19,9 +19,10 @@ namespace Sample.Application
         private void TestAllSystems(ITestHardwareCapacity hardwareCapacityTester)
         {
             Debug.EnableGCMessages(false);
-            hardwareCapacityTester.TestWanHttp();
-            hardwareCapacityTester.TestLanHttp();
+
             hardwareCapacityTester.TestDhcp();
+            hardwareCapacityTester.TestWanHttp("http://www.bigfont.ca");
+            // hardwareCapacityTester.TestLanHttp(); // this one tends to fail :(
         }
     }
 }
