@@ -21,9 +21,10 @@ namespace Sample.Application
 
         private void TestAllSystems(ITestHardwareCapacity hardwareCapacityTester)
         {
-            hardwareCapacityTester.TestDhcp();
-            hardwareCapacityTester.TestWanViaHttpRequestToRemoteHost("bigfont.ca");
-            hardwareCapacityTester.TestLanViaHttpRequestToRemoteHost("192.168.1.148");
+            hardwareCapacityTester.TestNetworkInterfaces();
+            hardwareCapacityTester.TestHttpRequest(Proximity.WideAreaNetwork, "bigfont.ca");
+            hardwareCapacityTester.TestHttpRequest(Proximity.LocalAreaNetwork, "192.168.1.148");
+            hardwareCapacityTester.TestHttpRequest(Proximity.Self);
         }
     }
 }

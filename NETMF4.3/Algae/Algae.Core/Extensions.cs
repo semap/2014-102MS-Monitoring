@@ -8,6 +8,8 @@ namespace Algae.Core.Extensions.NETMF
     {
         public static string GetName(this NetworkInterfaceType enumValue)
         {
+            // TODO Make this generic via reflection. 
+
             var name = string.Empty;
 
             switch (enumValue)

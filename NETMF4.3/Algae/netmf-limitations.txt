@@ -1,0 +1,8 @@
+
+# NETMF Limitiations
+
+* Get an enum name. 
+
+* Get the name of the current method.
+
+* No LINQ.

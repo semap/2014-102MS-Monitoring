@@ -19,16 +19,15 @@ namespace Algae.Core
             Debug.EnableGCMessages(false);
         }
         
-        public bool TestDhcp()
+        public bool TestNetworkInterfaces()
         {
             Debug.Print("-----");
-            Debug.Print("TestDhcp");
+            Debug.Print("TestNetworkInterfaces");
 
             var result = false;
 
             try
             {
-                var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
                 var builder = new StringBuilder();
 
                 int[] columns = new int[] 
@@ -54,23 +53,24 @@ namespace Algae.Core
                 builder.Append("GatewayAddress");
                 Debug.Print(builder.ToString());
 
-                foreach (var ni in allNetworkInterfaces)
+                var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+                foreach (var networkInterface in allNetworkInterfaces)
                 {
                     builder.Clear();
 
-                    builder.Append(ni.NetworkInterfaceType.GetName());
+                    builder.Append(networkInterface.NetworkInterfaceType.GetName());
                     builder.Append(new string(' ', columns[0] - builder.Length));
 
-                    builder.Append(ni.IsDhcpEnabled.ToString());
+                    builder.Append(networkInterface.IsDhcpEnabled.ToString());
                     builder.Append(new string(' ', columns[1] - builder.Length));
 
-                    builder.Append(ni.IPAddress);
+                    builder.Append(networkInterface.IPAddress);
                     builder.Append(new string(' ', columns[2] - builder.Length));
 
-                    builder.Append(ni.SubnetMask);
+                    builder.Append(networkInterface.SubnetMask);
                     builder.Append(new string(' ', columns[3] - builder.Length));
 
-                    builder.Append(ni.GatewayAddress);
+                    builder.Append(networkInterface.GatewayAddress);
                     Debug.Print(builder.ToString());
                 }
             }
@@ -82,40 +82,40 @@ namespace Algae.Core
             return result;
         }
 
-        public bool TestWanViaHttpRequestToRemoteHost(string host)
+        public bool TestHttpRequest(Proximity networkProximity, string host = "")
         {
             Debug.Print("-----");
-            Debug.Print("TestWanHttp");
-            return TestHttp(host);
-        }
+            Debug.Print("TestHttpClient:" + networkProximity.ToString());
 
-        public bool TestLanViaHttpRequestToRemoteHost(string host)
-        {
-            Debug.Print("-----");
-            Debug.Print("TestLanHttp");
-            return TestHttp(host);
-        }
-
-        public bool TestLocalServerViaHttpRequestToSelf()
-        {
-            Debug.Print("-----");
-            Debug.Print("TestLocalServer");
-
-            var nic = NetworkInterface.GetAllNetworkInterfaces();
-
-            var host = "";
+            if (networkProximity == Proximity.Self && host == string.Empty)
+            {
+                host = GetLocalHost();
+            }
 
             return TestHttp(host);
         }
 
-        public bool TestWanViaPing()
+        public bool TestPing()
         {
-            return true;
+            throw new NotImplementedException();
         }
 
-        public bool TestLanViaPing()
+        private static string GetLocalHost()
         {
-            return true;
+            var localHost = string.Empty;
+            var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (var networkInterface in allNetworkInterfaces)
+            {
+                if (networkInterface.IsDhcpEnabled && 
+                    networkInterface.IPAddress != "0.0.0.0" &&
+                    networkInterface.GatewayAddress != "0.0.0.0")
+                {
+                    localHost = networkInterface.IPAddress;
+                }
+            }
+
+            return localHost;
         }
 
         private static bool TestHttp(string host)

@@ -2,18 +2,20 @@ using System;
 
 namespace Algae.Abstractions
 {
+    public enum Proximity
+    { 
+        Self,
+        WideAreaNetwork,
+        LocalAreaNetwork
+    }
+
     public interface ITestHardwareCapacity
     {
         // e.g. bigfont.ca
-        bool TestWanViaHttpRequestToRemoteHost(string host);
+        bool TestHttpRequest(Proximity proximity, string host = "");
 
-        // e.g. 192.168.1.148
-        bool TestLanViaHttpRequestToRemoteHost(string host);
+        bool TestPing();
 
-        bool TestWanViaPing();
-
-        bool TestLanViaPing();
-
-        bool TestDhcp();
+        bool TestNetworkInterfaces();
     }
 }
