@@ -5,14 +5,14 @@ namespace Algae.Abstractions
     public interface ITestHardwareCapacity
     {
         // e.g. bigfont.ca
-        bool TestWanHttp(string host);
+        bool TestWanViaHttp(string host);
 
         // e.g. 192.168.1.148
-        bool TestLanHttp(string host);
+        bool TestLanViaHttp(string host);
 
-        bool TestWanPing();
+        bool TestWanViaPing();
 
-        bool TestLanPing();
+        bool TestLanViaPing();
 
         bool TestDhcp();
     }

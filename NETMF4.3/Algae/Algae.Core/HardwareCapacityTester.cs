@@ -81,26 +81,26 @@ namespace Algae.Core
             return result;
         }
 
-        public bool TestWanHttp(string host)
+        public bool TestWanViaHttp(string host)
         {
             Debug.Print("-----");
             Debug.Print("TestWanHttp");
             return TestHttp(host);
         }
 
-        public bool TestLanHttp(string host)
+        public bool TestLanViaHttp(string host)
         {
             Debug.Print("-----");
             Debug.Print("TestLanHttp");
             return TestHttp(host);
         }
 
-        public bool TestWanPing()
+        public bool TestWanViaPing()
         {
             return true;
         }
 
-        public bool TestLanPing()
+        public bool TestLanViaPing()
         {
             return true;
         }

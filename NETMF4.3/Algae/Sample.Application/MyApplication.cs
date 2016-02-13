@@ -22,8 +22,8 @@ namespace Sample.Application
         private void TestAllSystems(ITestHardwareCapacity hardwareCapacityTester)
         {
             hardwareCapacityTester.TestDhcp();
-            hardwareCapacityTester.TestWanHttp("bigfont.ca");
-            hardwareCapacityTester.TestLanHttp("192.168.1.148");
+            hardwareCapacityTester.TestWanViaHttp("bigfont.ca");
+            hardwareCapacityTester.TestLanViaHttp("192.168.1.148");
         }
     }
 }
