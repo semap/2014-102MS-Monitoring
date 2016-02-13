@@ -1,13 +1,16 @@
 using System;
 using Algae.Abstractions;
-using Microsoft.SPOT;
 
 namespace Sample.Application
 {
     public class MyApplication
     {
-        public MyApplication(ITestHardwareCapacity hardwareCapacityTester)
+        public MyApplication(
+            ITestHardwareCapacity hardwareCapacityTester,
+            INetworkDriver networkDriver)
         {
+            networkDriver.InitializeNetwork();
+            
             TestAllSystems(hardwareCapacityTester);
 
             while (true)
@@ -18,8 +21,6 @@ namespace Sample.Application
 
         private void TestAllSystems(ITestHardwareCapacity hardwareCapacityTester)
         {
-            Debug.EnableGCMessages(false);
-
             hardwareCapacityTester.TestDhcp();
             hardwareCapacityTester.TestWanHttp("bigfont.ca");
             hardwareCapacityTester.TestLanHttp("192.168.1.148");

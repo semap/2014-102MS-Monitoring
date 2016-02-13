@@ -1,0 +1,20 @@
+
+# Open a port for Http Communication
+
+1. Search > Windows Firewall
+
+2. Advanced settings. 
+
+3. Inbound Rules. 
+
+4. New Rule.
+
+    RuleType: Port
+	Protocol: TCP
+	Port: 80
+	Action: Allow the connection
+	Profile: Private
+	Name: BigFont IoT
+	Description: This opens a port on this computer for IoT testing.
+
+Since this opens a port, it's worth disabling this rule when not testing.

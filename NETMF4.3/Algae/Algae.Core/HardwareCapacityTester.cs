@@ -12,6 +12,12 @@ namespace Algae.Core
 {
     public class HardwareCapacityTester : ITestHardwareCapacity
     {
+        public HardwareCapacityTester()
+        {
+            // turn off the noise :)
+            Debug.EnableGCMessages(false);
+        }
+        
         public bool TestDhcp()
         {
             Debug.Print("-----");
@@ -116,11 +122,16 @@ namespace Algae.Core
             {
                 Debug.Print("Request failed");
                 Debug.Print("Try requesting the host through your web browser.");
+                Debug.Print("And if you are testing the LAN, ensure the host's port 80 is open.");
             }
 
             if (success)
             {
                 Debug.Print("Request succeeded.");
+            }
+            else
+            {
+                Debug.Print("Request failed.");
             }
 
             return success;

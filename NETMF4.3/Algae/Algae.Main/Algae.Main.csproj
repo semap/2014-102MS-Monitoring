@@ -44,6 +44,10 @@
       <Project>{512E930F-CF8D-4DD6-836D-6A5E311669B0}</Project>
       <Name>Algae.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algae.Hardware.G120\Algae.Hardware.G120.csproj">
+      <Project>{A01BE0CD-4B04-4A6C-A77B-A86D0902D055}</Project>
+      <Name>Algae.Hardware.G120</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sample.Application\Sample.Application.csproj">
       <Project>{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}</Project>
       <Name>Sample.Application</Name>

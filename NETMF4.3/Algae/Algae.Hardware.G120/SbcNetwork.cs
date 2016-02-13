@@ -6,7 +6,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Algae.Abstractions;
 
-namespace Algae.Hardware.G120.Ethernet
+namespace Algae.Hardware.G120
 {
     /*
      * https://www.ghielectronics.com/docs/30/networking#3123

@@ -1,4 +1,5 @@
 using Algae.Core;
+using Algae.Hardware.G120;
 using Sample.Application;
 
 namespace Algae.Main
@@ -8,7 +9,8 @@ namespace Algae.Main
         public static void Main()
         {
             var application = new MyApplication(
-                new HardwareCapacityTester());
+                new HardwareCapacityTester(),
+                new SbcNetwork());
         }
     }
 }
