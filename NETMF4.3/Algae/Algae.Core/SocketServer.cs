@@ -3,43 +3,41 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Algae.Abstractions;
 using Microsoft.SPOT;
 using Socket = System.Net.Sockets.Socket;
 
-namespace HttpServer
+namespace Algae.Core
 {
     // http://127.0.0.1:12000/
-    public class HttpServer
+    public class SocketServer : ISocketServer
     {
-        const Int32 Port = 12000;
-        const Int32 MicrosecondsPerSecond = 1000000;
+        private const int Port = 12000;
+        private const int MicrosecondsPerSecond = 1000000;
 
         private Socket _clientSocket;
 
-        public HttpServer(Boolean asynchronously)
+        public void Start()
         {
             var server = new Socket(
                 AddressFamily.InterNetwork,
-                SocketType.Stream, 
+                SocketType.Stream,
                 ProtocolType.Tcp);
 
-            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, Port);
+            var localEndPoint = new IPEndPoint(IPAddress.Any, Port);
             server.Bind(localEndPoint);
             server.Listen(Int32.MaxValue);
 
             while (true)
             {
                 _clientSocket = server.Accept();
-
-                if (asynchronously)
-                {
-                    new Thread(ProcessRequest).Start();
-                }
-                else
-                {
-                    ProcessRequest();
-                }
+                new Thread(ProcessRequest).Start();
             }
+        }
+
+        public void Stop()
+        {
+
         }
 
         private void ProcessRequest()
@@ -61,11 +59,22 @@ namespace HttpServer
                     int bytesRead = _clientSocket.Receive(buffer, _clientSocket.Available, SocketFlags.None);
 
                     // Return a static HTML document to the client.
-                    String s =
-                        "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n<html><head><title>.NET Micro Framework Web Server</title></head>" +
-                       "<body><bold><a href=\"http://www.microsoft.com/netmf/\">Learn more about the .NET Micro Framework by clicking here</a></bold></body></html>";
+                    var builder = new StringBuilder();
+                    builder.Append("HTTP/1.1 200 OK\r\n");
+                    builder.Append("Content-Type: text/html; charset=utf-8\r\n\r\n");
+                    builder.Append(
+@"
+<html>
+    <head>
+        <title>.NET Micro Framework Web Server</title>
+    </head>
+    <body>
+        <p>Hello world.</p>
+    </body>
+</html>
+");
 
-                    _clientSocket.Send(Encoding.UTF8.GetBytes(s));
+                    _clientSocket.Send(Encoding.UTF8.GetBytes(builder.ToString()));
                 }
             }
         }

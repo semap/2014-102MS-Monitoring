@@ -9,8 +9,15 @@ namespace Algae.Hardware.Emulator
     public class SbcNetwork : INetworkDriver
     {
         public void InitializeNetwork()
-        { 
-            // This is not necessary in the emulator.
+        {
+            // The emulator's network 
+            // appears to be the host computer's network.
+        }
+
+        public void InitializeServer()
+        {
+            // The emulator's server 
+            // appears to be host computer's server.
         }
     }
 }

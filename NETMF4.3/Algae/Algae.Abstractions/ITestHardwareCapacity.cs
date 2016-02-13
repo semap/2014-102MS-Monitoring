@@ -12,7 +12,7 @@ namespace Algae.Abstractions
     public interface ITestHardwareCapacity
     {
         // e.g. bigfont.ca
-        bool TestHttpRequest(Proximity proximity, string host = "");
+        bool TestHttpRequest(Proximity proximity, string host, int port = 80);
 
         bool TestPing();
 

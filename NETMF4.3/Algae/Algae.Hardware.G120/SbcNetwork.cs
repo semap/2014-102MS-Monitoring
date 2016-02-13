@@ -16,6 +16,11 @@ namespace Algae.Hardware.G120
     {
         private EthernetENC28J60 Ethernet;
 
+        public SbcNetwork()
+        {
+
+        }
+
         public void InitializeNetwork()
         {
             Ethernet = new EthernetENC28J60(
@@ -36,6 +41,11 @@ namespace Algae.Hardware.G120
 
             Debug.Print(Ethernet.IPAddress);
             Debug.Print("The network is now ready to use.");
+        }
+
+        public void InitializeServer()
+        {
+
         }
     }
 }

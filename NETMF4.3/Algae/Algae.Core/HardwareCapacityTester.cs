@@ -82,17 +82,15 @@ namespace Algae.Core
             return result;
         }
 
-        public bool TestHttpRequest(Proximity networkProximity, string host = "")
+        public bool TestHttpRequest(Proximity networkProximity, string host, int port = 80)
         {
             Debug.Print("-----");
             Debug.Print("TestHttpClient:" + networkProximity.ToString());
 
-            if (networkProximity == Proximity.Self && host == string.Empty)
-            {
-                host = GetLocalHost();
-            }
+            // TODO Something with the Proximity enum.
+            // Why do we even have it?
 
-            return TestHttp(host);
+            return TestHttp(host, port);
         }
 
         public bool TestPing()
@@ -103,8 +101,8 @@ namespace Algae.Core
         private static string GetLocalHost()
         {
             var localHost = string.Empty;
-            var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 
+            var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             foreach (var networkInterface in allNetworkInterfaces)
             {
                 if (networkInterface.IsDhcpEnabled && 
@@ -112,13 +110,14 @@ namespace Algae.Core
                     networkInterface.GatewayAddress != "0.0.0.0")
                 {
                     localHost = networkInterface.IPAddress;
+                    break;
                 }
             }
 
             return localHost;
         }
 
-        private static bool TestHttp(string host)
+        private static bool TestHttp(string host, int port)
         {
             var success = false;
 
@@ -126,7 +125,7 @@ namespace Algae.Core
 
             try
             {
-                var html = SocketClient.GetWebPage(host, 80);
+                var html = SocketClient.GetWebPage(host, port);
                 success =
                     html.IndexOf("head") > 0 &&
                     html.IndexOf("body") > 0;

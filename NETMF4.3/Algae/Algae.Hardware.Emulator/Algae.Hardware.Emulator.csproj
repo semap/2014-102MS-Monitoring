@@ -33,6 +33,7 @@
     <Compile Include="SbcNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
   </ItemGroup>
   <ItemGroup>

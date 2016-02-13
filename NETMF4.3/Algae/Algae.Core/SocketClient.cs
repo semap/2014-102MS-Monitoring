@@ -8,6 +8,7 @@ using Socket = System.Net.Sockets.Socket;
 
 namespace Algae.Core
 {
+    // TODO Consider making this into an interface.
     public static class SocketClient
     {
         private const Int32 MicrosecondsPerSecond = 1000000;

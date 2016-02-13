@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C9EF41B2-F3E8-4A72-BADC-E09CBF8C4C7E}"
 	ProjectSection(SolutionItems) = preProject
 		netmf-limitations.txt = netmf-limitations.txt
+		next-steps.txt = next-steps.txt
 		windows-10-open-port.txt = windows-10-open-port.txt
 	EndProjectSection
 EndProject

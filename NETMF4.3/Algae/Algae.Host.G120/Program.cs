@@ -10,7 +10,8 @@ namespace Algae.Main
         {
             var application = new MyApplication(
                 new HardwareCapacityTester(),
-                new SbcNetwork());
+                new SbcNetwork(),
+                new SocketServer());
         }
     }
 }
