@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <AssemblyName>Algae.Core</AssemblyName>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Algae.Core</RootNamespace>
+    <AssemblyName>Algae.Host.G120</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Algae.Host.G120</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{512E930F-CF8D-4DD6-836D-6A5E311669B0}</ProjectGuid>
+    <ProjectGuid>{C2CCF126-3F19-46D6-9B3F-6FAF96D73BF1}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
   </PropertyGroup>
@@ -29,22 +29,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HardwareCapacityTester.cs" />
-    <Compile Include="SocketClient.cs" />
-    <Compile Include="SocketServer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Microsoft.SPOT.Net" />
-    <Reference Include="System" />
-    <Reference Include="System.Text.RegularExpressions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algae.Abstractions\Algae.Abstractions.csproj">
       <Project>{EB6F90BA-D9F3-48E4-88C2-6172F2DE1C69}</Project>
       <Name>Algae.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algae.Core\Algae.Core.csproj">
+      <Project>{512E930F-CF8D-4DD6-836D-6A5E311669B0}</Project>
+      <Name>Algae.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algae.Hardware.G120\Algae.Hardware.G120.csproj">
+      <Project>{A01BE0CD-4B04-4A6C-A77B-A86D0902D055}</Project>
+      <Name>Algae.Hardware.G120</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sample.Application\Sample.Application.csproj">
+      <Project>{D2AB95EB-C7AF-49B8-B945-5BD2EB06A29A}</Project>
+      <Name>Sample.Application</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

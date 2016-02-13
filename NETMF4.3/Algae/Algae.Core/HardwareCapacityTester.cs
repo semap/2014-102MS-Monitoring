@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using Algae.Abstractions;
+using Algae.Core.Extensions.NETMF;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Net.NetworkInformation;
 
@@ -57,7 +58,7 @@ namespace Algae.Core
                 {
                     builder.Clear();
 
-                    builder.Append(EnumName(ni.NetworkInterfaceType));
+                    builder.Append(ni.NetworkInterfaceType.GetName());
                     builder.Append(new string(' ', columns[0] - builder.Length));
 
                     builder.Append(ni.IsDhcpEnabled.ToString());
@@ -81,17 +82,29 @@ namespace Algae.Core
             return result;
         }
 
-        public bool TestWanViaHttp(string host)
+        public bool TestWanViaHttpRequestToRemoteHost(string host)
         {
             Debug.Print("-----");
             Debug.Print("TestWanHttp");
             return TestHttp(host);
         }
 
-        public bool TestLanViaHttp(string host)
+        public bool TestLanViaHttpRequestToRemoteHost(string host)
         {
             Debug.Print("-----");
             Debug.Print("TestLanHttp");
+            return TestHttp(host);
+        }
+
+        public bool TestLocalServerViaHttpRequestToSelf()
+        {
+            Debug.Print("-----");
+            Debug.Print("TestLocalServer");
+
+            var nic = NetworkInterface.GetAllNetworkInterfaces();
+
+            var host = "";
+
             return TestHttp(host);
         }
 
@@ -135,29 +148,6 @@ namespace Algae.Core
             }
 
             return success;
-        }
-
-        private static string EnumName(NetworkInterfaceType enumValue)
-        {
-            var name = string.Empty;
-
-            switch (enumValue)
-            {
-                case NetworkInterfaceType.Ethernet:
-                    name = "Ethernet";
-                    break;
-
-                case NetworkInterfaceType.Wireless80211:
-                    name = "Wireless80211";
-                    break;
-
-                case NetworkInterfaceType.Unknown:
-                default:
-                    name = "Unknown Network Interface";
-                    break;
-            }
-
-            return name;
         }
     }
 }
