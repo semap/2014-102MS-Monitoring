@@ -26,6 +26,12 @@ namespace Algae.Core
 
         public void Write(string message)
         {
+            if (_filePath == null || _filePath.Length == 0)
+            {
+                // there is no formatted file system :(
+                return;
+            }
+
             byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
             
             var fileMode = File.Exists(_filePath)
