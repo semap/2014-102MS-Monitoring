@@ -29,10 +29,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SbcFlasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SbcNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="GHI.Hardware, Version=4.3.6.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="GHI.Networking, Version=4.3.6.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="GHI.Pins, Version=4.3.6.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.SPOT.Hardware" />

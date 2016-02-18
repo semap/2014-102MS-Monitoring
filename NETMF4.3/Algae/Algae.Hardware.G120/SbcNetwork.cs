@@ -16,9 +16,11 @@ namespace Algae.Hardware.G120
     {
         private EthernetENC28J60 Ethernet;
 
-        public SbcNetwork()
-        {
+        private ILogger _logger;
 
+        public SbcNetwork(ILogger logger)
+        {
+            _logger = logger;
         }
 
         public void InitializeNetwork()
@@ -35,12 +37,12 @@ namespace Algae.Hardware.G120
 
             while (Ethernet.IPAddress == "0.0.0.0")
             {
-                Debug.Print("Waiting for DHCP");
+                _logger.Write("Waiting for DHCP");
                 Thread.Sleep(250);
             }
 
-            Debug.Print(Ethernet.IPAddress);
-            Debug.Print("The network is now ready to use.");
+            _logger.Write(Ethernet.IPAddress);
+            _logger.Write("The network is now ready to use.");
         }
 
         public void InitializeServer()

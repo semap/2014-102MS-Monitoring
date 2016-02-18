@@ -30,11 +30,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SbcFlasher.cs" />
     <Compile Include="SbcNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
+    <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algae.Abstractions\Algae.Abstractions.csproj">

@@ -13,16 +13,18 @@ namespace Algae.Core
 {
     public class HardwareCapacityTester : ITestHardwareCapacity
     {
-        public HardwareCapacityTester()
+        private ILogger _logger;
+
+        public HardwareCapacityTester(ILogger logger)
         {
-            // turn off the noise :)
+            _logger = logger;
             Debug.EnableGCMessages(false);
         }
         
         public bool TestNetworkInterfaces()
         {
-            Debug.Print("-----");
-            Debug.Print("TestNetworkInterfaces");
+            _logger.Write("-----");
+            _logger.Write("TestNetworkInterfaces");
 
             var result = false;
 
@@ -51,7 +53,7 @@ namespace Algae.Core
                 builder.Append(new string(' ', columns[3] - builder.Length));
 
                 builder.Append("GatewayAddress");
-                Debug.Print(builder.ToString());
+                _logger.Write(builder.ToString());
 
                 var allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
                 foreach (var networkInterface in allNetworkInterfaces)
@@ -71,12 +73,12 @@ namespace Algae.Core
                     builder.Append(new string(' ', columns[3] - builder.Length));
 
                     builder.Append(networkInterface.GatewayAddress);
-                    Debug.Print(builder.ToString());
+                    _logger.Write(builder.ToString());
                 }
             }
             catch (Exception ex)
             {
-                Debug.Print(ex.ToString());
+                _logger.Write(ex.ToString());
             }
 
             return result;
@@ -84,8 +86,8 @@ namespace Algae.Core
 
         public bool TestHttpRequest(Proximity networkProximity, string host, int port = 80)
         {
-            Debug.Print("-----");
-            Debug.Print("TestHttpClient:" + networkProximity.ToString());
+            _logger.Write("-----");
+            _logger.Write("TestHttpClient:" + networkProximity.ToString());
 
             // TODO Something with the Proximity enum.
             // Why do we even have it?
@@ -98,7 +100,7 @@ namespace Algae.Core
             throw new NotImplementedException();
         }
 
-        private static string GetLocalHost()
+        private string GetLocalHost()
         {
             var localHost = string.Empty;
 
@@ -117,11 +119,11 @@ namespace Algae.Core
             return localHost;
         }
 
-        private static bool TestHttp(string host, int port)
+        private bool TestHttp(string host, int port)
         {
             var success = false;
 
-            Debug.Print("Requesting " + host);
+            _logger.Write("Requesting " + host);
 
             try
             {
@@ -132,18 +134,18 @@ namespace Algae.Core
             }
             catch (Exception)
             {
-                Debug.Print("Request failed");
-                Debug.Print("Try requesting the host through your web browser.");
-                Debug.Print("And if you are testing the LAN, ensure the host's port 80 is open.");
+                _logger.Write("Request failed");
+                _logger.Write("Try requesting the host through your web browser.");
+                _logger.Write("And if you are testing the LAN, ensure the host's port 80 is open.");
             }
 
             if (success)
             {
-                Debug.Print("Request succeeded.");
+                _logger.Write("Request succeeded.");
             }
             else
             {
-                Debug.Print("Request failed.");
+                _logger.Write("Request failed.");
             }
 
             return success;

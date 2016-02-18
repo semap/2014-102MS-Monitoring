@@ -9,9 +9,10 @@ namespace Algae.Main
         public static void Main()
         {
             var application = new MyApplication(
-                new HardwareCapacityTester(),
-                new SbcNetwork(),
-                new SocketServer());
+                hardwareCapacityTester: new HardwareCapacityTester(logger:new SbcLogger()),
+                flasher : new SbcFlasher(),
+                networkDriver: new SbcNetwork(logger: new SbcLogger()),
+                socketServer: new SocketServer());
         }
     }
 }

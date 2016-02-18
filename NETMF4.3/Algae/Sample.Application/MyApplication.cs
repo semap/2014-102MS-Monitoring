@@ -10,6 +10,7 @@ namespace Sample.Application
 
         public MyApplication(
             ITestHardwareCapacity hardwareCapacityTester,
+            IFlasher flasher,
             INetworkDriver networkDriver,
             ISocketServer socketServer)
         {
@@ -21,8 +22,9 @@ namespace Sample.Application
             TestAllSystems(hardwareCapacityTester);
             
             while (true)
-            { 
-                // prevent program exit :)    
+            {
+                Thread.Sleep(1000);
+                flasher.Flash();
             }
         }
 

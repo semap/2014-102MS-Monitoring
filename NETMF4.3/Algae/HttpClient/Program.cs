@@ -6,7 +6,9 @@ namespace HttpClient
     public class Program
     {
         const string WideAreaNetworkHttpAddress = "http://www.bigfont.ca";
-        const string LocalAreaNetworkHttpAddress = "http://10.10.40.124"; // e.g. localhost on emulator's computer
+
+        // e.g. localhost on emulator's computer
+        const string LocalAreaNetworkHttpAddress = "http://10.10.40.124"; 
 
         public static void Main()
         {
