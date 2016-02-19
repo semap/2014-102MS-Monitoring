@@ -1,0 +1,35 @@
+-----
+TestNetworkInterfaces
+Network Interface             Enabled   IPAddress           SubnetMask          GatewayAddress
+Wireless80211                 True      169.254.231.31      255.255.0.0         0.0.0.0
+Ethernet                      True      192.168.1.148       255.255.255.0       192.168.1.1
+Ethernet                      True      169.254.137.140     255.255.0.0         0.0.0.0
+Unknown Network Interface     False     127.0.0.1           255.0.0.0           0.0.0.0
+Unknown Network Interface     False     0.0.0.0             0.0.0.0             0.0.0.0
+Unknown Network Interface     False     0.0.0.0             0.0.0.0             0.0.0.0
+-----
+TestHttpClient:1
+Requesting bigfont.ca:80
+Request failed
+Try requesting the host through your web browser.
+And if you are testing the LAN, ensure the host's port 80 is open.
+Request failed.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:80
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:0
+Requesting 127.0.0.1:12000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000

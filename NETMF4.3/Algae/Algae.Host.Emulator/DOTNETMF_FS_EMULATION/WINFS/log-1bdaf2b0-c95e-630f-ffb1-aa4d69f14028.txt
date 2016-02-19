@@ -1,0 +1,19 @@
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000
+Request succeeded.
+-----
+TestHttpClient:2
+Requesting 192.168.1.148:5000

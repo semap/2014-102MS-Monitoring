@@ -1,7 +1,8 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
+using System;
 
-namespace EmptyApplication01
+namespace Algae.WebApp
 {
     public class Startup
     {
@@ -9,7 +10,8 @@ namespace EmptyApplication01
         {
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello Shaun and Anthony!");
+                System.Console.WriteLine(DateTime.Now.ToString());
+                await context.Response.WriteAsync("head, body");
             });
         }
     }

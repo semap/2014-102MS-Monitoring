@@ -1,0 +1,5 @@
+
+Run these two commands in powershell
+
+    cd C:\GitHub\2014-102MS-Monitoring\NETMF4.3\Algae\Algae.Host.Emulator\DOTNETMF_FS_EMULATION\WINFS
+    Get-ChildItem | Sort-Object LastWriteTime | Select-Object -First 1 | Get-Content

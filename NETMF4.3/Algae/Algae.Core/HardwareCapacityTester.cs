@@ -123,7 +123,7 @@ namespace Algae.Core
         {
             var success = false;
 
-            _logger.Write("Requesting " + host);
+            _logger.Write("Requesting " + host + ":" + port.ToString());
 
             try
             {

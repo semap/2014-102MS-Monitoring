@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{C9EF41B2
 	ProjectSection(SolutionItems) = preProject
 		netmf-limitations.txt = netmf-limitations.txt
 		next-steps.txt = next-steps.txt
+		read-the-log.txt = read-the-log.txt
 		windows-10-open-port.txt = windows-10-open-port.txt
 	EndProjectSection
 EndProject
@@ -31,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServer", "_ResearchAndSamples\HttpServer\HttpServer.csproj", "{D58775A4-AF69-45FD-82AB-6959F8D38F43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingClient", "_ResearchAndSamples\PingClient\PingClient.csproj", "{5C8DB099-4910-460F-9353-5BC8CDBD66AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFConsoleApplication1", "MFConsoleApplication1\MFConsoleApplication1.csproj", "{6F03313E-4139-4189-BA71-281541867586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +89,12 @@ Global
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C8DB099-4910-460F-9353-5BC8CDBD66AF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F03313E-4139-4189-BA71-281541867586}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
