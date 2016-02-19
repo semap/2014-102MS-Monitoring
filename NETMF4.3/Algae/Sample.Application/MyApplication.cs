@@ -38,11 +38,11 @@ namespace Sample.Application
         private void TestAllSystems(ITestHardwareCapacity hardwareCapacityTester)
         {
             // this takes about one to five minutes.
-            //hardwareCapacityTester.TestNetworkInterfaces();
-            //hardwareCapacityTester.TestHttpRequest(Proximity.WideAreaNetwork, "bigfont.ca"); 
-            //hardwareCapacityTester.TestHttpRequest(Proximity.LocalAreaNetwork, "192.168.1.148", 80); 
-            //hardwareCapacityTester.TestHttpRequest(Proximity.LocalAreaNetwork, "192.168.1.148", 5000); 
-            //hardwareCapacityTester.TestHttpRequest(Proximity.Self, "127.0.0.1", 12000); 
+            hardwareCapacityTester.TestNetworkInterfaces();
+            hardwareCapacityTester.TestHttpRequest(Proximity.WideAreaNetwork, "bigfont.ca");
+            hardwareCapacityTester.TestHttpRequest(Proximity.LocalAreaNetwork, "192.168.1.148", 80);
+            hardwareCapacityTester.TestHttpRequest(Proximity.LocalAreaNetwork, "192.168.1.148", 5000);
+            hardwareCapacityTester.TestHttpRequest(Proximity.Self, "127.0.0.1", 12000); 
         }
     }
 }
