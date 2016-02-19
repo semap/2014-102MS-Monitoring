@@ -13,35 +13,34 @@ namespace Algae.Core
 
         public SbcLogger()
         {
-            var fileName = "log-" + Guid.NewGuid().ToString() + ".txt";
-            foreach (var info in VolumeInfo.GetVolumes())
-            {
-                if (info.IsFormatted)
-                {
-                     _filePath = Path.Combine(info.RootDirectory, fileName);
-                    break;
-                }
-            }
+            //var fileName = "log-" + Guid.NewGuid().ToString() + ".txt";
+            //foreach (var info in VolumeInfo.GetVolumes())
+            //{
+            //    if (info.IsFormatted)
+            //    {
+            //         _filePath = Path.Combine(info.RootDirectory, fileName);
+            //        break;
+            //    }
+            //}
         }
 
         public void Write(string message)
         {
-            if (_filePath == null || _filePath.Length == 0)
-            {
-                // there is no formatted file system :(
-                return;
-            }
+            //if (_filePath == null || _filePath.Length == 0)
+            //{
+            //    return;
+            //}
 
-            byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
+            //byte[] data = Encoding.UTF8.GetBytes(message + "\r\n");
             
-            var fileMode = File.Exists(_filePath)
-                ? FileMode.Append
-                : FileMode.Create;
+            //var fileMode = File.Exists(_filePath)
+            //    ? FileMode.Append
+            //    : FileMode.Create;
 
-            var fileStream = new FileStream(_filePath, fileMode);
+            //var fileStream = new FileStream(_filePath, fileMode);
 
-            fileStream.Write(data, 0, data.Length);
-            fileStream.Close();
+            //fileStream.Write(data, 0, data.Length);
+            //fileStream.Close();
         }
     }
 }
