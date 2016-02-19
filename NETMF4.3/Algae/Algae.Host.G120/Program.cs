@@ -8,13 +8,6 @@ namespace Algae.Host
     {
         public static void Main()
         {
-            //var flasher = new SbcFlasher();
-            //while (true)
-            //{
-            //    System.Threading.Thread.Sleep(500);
-            //    flasher.Flash();
-            //}
-
             var logger = new SbcLogger();
 
             var application = new MyApplication(

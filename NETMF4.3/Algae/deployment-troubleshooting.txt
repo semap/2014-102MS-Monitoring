@@ -1,0 +1,23 @@
+
+# Deployment Troubleshooting
+
+## If Visual Studio or Fez Config cannot establish a connection.
+
+1. Plug in the USB. 
+1. Also plug in a secondary power source. 
+1. Open Fez Config. 
+1. Enter Bootloader Mode (hold hown LDR0 and LDR1, press reset, release reset, release LDR1 and LDR2.)
+1. Go to Advanced > Loader > G120 > Next > Next > Etc until complete.
+1. Fez Config will crash. Restart it. ("C:\Program Files (x86)\GHI Electronics\GHI FEZ Config\FEZ Config.exe")
+1. Now go to Firmware Updater.
+1. Wait, then click Next > Next > Etc until complete.
+1. Now we can deploy!
+1. Return to Visual Studio and deploy.
+1. Finally, reset the device (i.e. press the reset button)
+
+## If the software does not seem to be running. 
+
+1. Reset the single board computer. 
+1. I.e. just press the reset button.
+1. If that does not work, go to Fez Config. 
+1. Go to Deployment > Erase application.

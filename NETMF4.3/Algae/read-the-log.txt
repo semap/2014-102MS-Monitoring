@@ -1,4 +1,6 @@
 
+# Read the NETMF Emulator Logs
+
 Run these two commands in powershell
 
     cd C:\GitHub\2014-102MS-Monitoring\NETMF4.3\Algae\Algae.Host.Emulator\DOTNETMF_FS_EMULATION\WINFS

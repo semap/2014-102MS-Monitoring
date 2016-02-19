@@ -2,6 +2,5 @@
 # Next Steps 
 
 * On startup, send IpAddress to central IpAddress server. 
-
-  * To start this could be a text file on Zygot. 
-  * Later it could be a database in Azure.
+* To start this could be a text file on Zygot. 
+* Later it could be a database in Azure.
